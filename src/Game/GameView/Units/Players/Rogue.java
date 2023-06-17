@@ -92,4 +92,5 @@ public class Rogue extends Player{
     public Position getPosition() {
         return super.getPosition();
     }
+
 }

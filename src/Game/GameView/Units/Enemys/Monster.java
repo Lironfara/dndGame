@@ -74,4 +74,6 @@ public class Monster extends Enemy {
             moveRandomly(movement);
         }
     }
+
+
 }

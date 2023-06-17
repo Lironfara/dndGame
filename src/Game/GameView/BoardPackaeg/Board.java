@@ -14,35 +14,41 @@ import java.util.stream.Collectors;
 public class Board {
     private List<Tile> tiles;
     private TileFactory tileFactory = new TileFactory();
-    private Map<Position, Tile> map = new TreeMap<>();
+    private Map<Position, Tile> map = new HashMap<>();
+    private Map<Position, Units> mapOfUnits = new TreeMap<>();
     private List<Units> listOfUnitsInBoard = new ArrayList<>();
     private Position playerPosition ;
 
-    public void createBoard(File file, int idx){ //idx - the selected number of player
-        if (!(this.map==null)){
+    public Board(List<List<String>> cuurentLevel, Player player) {
+        if (!(this.map == null)) {
             map = new TreeMap<>();
-            tiles= new ArrayList<>();
+            tiles = new ArrayList<>();
         }
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line;
-            int i=0;
-            while((line=reader.readLine())!=null){
-                for(int x=0; x<line.length(); x++){
-                    Position position = new Position(new int[]{x,i});
-                    Tile t = tileFactory.produceTile(line.charAt(x), position, idx);
-                    if(line.charAt(x)== '@') {
-                        playerPosition = position;
-                    }
-                    map.put(position,t);
+        for (int height = 0; height < cuurentLevel.get(0).size(); height++) {
+            String line = cuurentLevel.get(0).get(height);
+            for (int width = 0; width < line.length(); width++) {
+                Position position = new Position(new int[]{width, height});
+                Tile t = tileFactory.generate(line.charAt(width), position);
+                if (line.charAt(width)=='@'){
+                    map.put(position, player);
                 }
-                i++;
+                else{
+                    map.put(position, t);
+                }
             }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
+    }
+
+
+    public List<Enemy> getEnemies(){
+        List<Enemy> enemies = new ArrayList<>();
+        System.out.println(map.values());
+        for (Tile tile: map.values()) {
+            if (tile.getTile()!='.' && tile.getTile()!='#' && tile.getTile()!='@'){
+                enemies.add(tileFactory.produceEnemy(tile.getTile(), tile.getPosition()));
+            }
+        };
+        return enemies;
     }
 
 
@@ -55,7 +61,7 @@ public class Board {
 
     public void gameTick(){
         for (Units unit : listOfUnitsInBoard) {
-            gameTick(unit);
+            //gameTick(unit);
         }
     }
 

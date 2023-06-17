@@ -68,4 +68,5 @@ public class Trap extends Enemy{
     public Position getPosition() {
         return super.getPosition();
     }
+
 }

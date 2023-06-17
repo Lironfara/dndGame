@@ -32,8 +32,14 @@ public abstract class Tile implements Comparable<Tile> {
     public abstract void accept(Wall wall);
 
 
-    @Override
+
     public int compareTo(Tile tile) {
+        if(this.position.getPosition()[0] > tile.position.getPosition()[0]){
+            return 1;
+        }
+        if (this.position.getPosition()[0] < tile.position.getPosition()[0]){
+            return -1;
+        }
         return 0;
     }
 

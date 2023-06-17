@@ -120,20 +120,20 @@ public abstract class Units extends Tile {
 
 
     public Position moveLeft(){
-        Position newp = new Position(new int[]{this.position.getPosition()[0] + 1, this.position.getPosition()[1]});
+        return new Position(new int[]{this.position.getPosition()[0] + 1, this.position.getPosition()[1]});
 
     }
 
     public Position moveUp(){
-        Position newp = new Position(new int[]{this.position.getPosition()[0] , this.position.getPosition()[1] - 1});
+        return new Position(new int[]{this.position.getPosition()[0] , this.position.getPosition()[1] - 1});
     }
 
     public Position moveDown(){
-        Position newp =  new Position(new int[]{this.position.getPosition()[0], this.position.getPosition()[1]+1});
+        return new Position(new int[]{this.position.getPosition()[0], this.position.getPosition()[1]+1});
     }
 
     public Position moveRight(){
-        Position newp = new Position(new int[]{this.position.getPosition()[0] - 1, this.position.getPosition()[1]});
+        return new Position(new int[]{this.position.getPosition()[0] - 1, this.position.getPosition()[1]});
 
     }
     public Position doNothing(){

@@ -9,7 +9,11 @@ public interface MessageCallback {
 
      String gameTickDesc(String s);
 
-     void choosePlayer();
+     void gameStartOutPut();
+
+     void choosePlayerSelection(String s);
+
+     void printBoard(String bord);
 
 
 }

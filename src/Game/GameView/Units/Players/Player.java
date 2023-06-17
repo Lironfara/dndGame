@@ -17,11 +17,17 @@ public abstract class Player extends Units {
     protected MessageCallback messageCallBack;
 
     public Position position;
+    private boolean dead;
 
     public Player(char c, String name, int health, int attackPoints, int defensePoints){
         super('@', name,health, attackPoints, defensePoints);
         this.experience=0;
         this.playerLevel=1;
+        dead = false;
+    }
+
+    public boolean isDead(){
+        return dead;
     }
 
 

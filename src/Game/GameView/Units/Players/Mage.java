@@ -109,4 +109,5 @@ public class Mage extends Player {
     public Position getPosition() {
         return super.getPosition();
     }
+
 }

@@ -24,4 +24,6 @@ public class Wall extends Tile {
     public String toString(){
         return "#";
     }
+
+
 }
