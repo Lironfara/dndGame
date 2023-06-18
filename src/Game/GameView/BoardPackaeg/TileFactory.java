@@ -42,6 +42,8 @@ public class TileFactory {
                 () -> new Trap('D', "Death Trap", 500, 100, 20, 250, 1, 10)
         );
 
+
+
         return enemies.stream().collect(Collectors.toMap(s -> s.get().getTile(), Function.identity()));
     }
 
@@ -94,5 +96,18 @@ public class TileFactory {
 
     public Wall produceWall(Position position){
         return new Wall(position);
+    }
+
+    public Tile generate(char c, Position position){
+        if (enemiesMap.containsKey(c)){
+            return produceEnemy(c, position);
+        }
+        if (c=='.'){
+            return produceEmpty(position);
+        }
+        if (c=='#'){
+            return produceWall(position);
+        }
+        return null;
     }
 }

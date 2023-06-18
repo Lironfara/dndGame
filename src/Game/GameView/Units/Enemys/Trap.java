@@ -21,16 +21,6 @@ public class Trap extends Enemy{
         visible=true;
     }
 
-    public void returnToBoard(){
-
-    }
-
-
-
-    public void removeFromBoard(){
-
-    }
-
 
     public void gameTick(Player player){
         visible = tickCount<visibilityTime;
@@ -61,11 +51,22 @@ public class Trap extends Enemy{
             return '.';
     }
 
-
-
-
     @Override
     public Position getPosition() {
         return super.getPosition();
     }
+
+
+    @Override public void visit(Empty e){}
+
+    @Override
+    public void visit(Tile tile) {
+
+    }
+
+
+    public void accept(Units unit, Position newPosition) {
+        unit.accept(this);
+    }
+
 }

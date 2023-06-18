@@ -1,5 +1,7 @@
 package Game.GameView.BoardPackaeg;
 
+import Game.GameView.Units.Enemys.Enemy;
+import Game.GameView.Units.Players.Player;
 import Game.GameView.Units.Units;
 
 public class Wall extends Tile {
@@ -9,19 +11,55 @@ public class Wall extends Tile {
         this.initialize(position);
     }
 
-    public void accept(Units unit) {
+    public void visit(Player player){}
+
+
+    public void visit(Enemy enemy){}
+
+    @Override
+    public void visit(Empty empty) {}
+
+
+
+    @Override
+    public void visit(Wall wall) {}
+
+    @Override
+    public void visit(Tile tile) {
+
+    }
+
+    public void accept(Units unit) {}
+
+
+    @Override
+    public void accept(Empty empty) {
+        empty.visit(this);
     }
 
     @Override
-    public void accept(Tile tile) {}
+    public void accept(Wall wall) {
+        wall.visit(this);
+    }
 
     @Override
-    public void accept(Empty empty) {}
+    public void accept(Enemy enemy) {
+        enemy.visit(this);
+    }
 
     @Override
-    public void accept(Wall wall) {}
+    public void accept(Player player) {
+
+    }
+
+    @Override
+    public void accept(Tile tile) {
+
+    }
 
     public String toString(){
         return "#";
     }
+
+
 }

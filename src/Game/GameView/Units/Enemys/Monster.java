@@ -3,6 +3,7 @@ package Game.GameView.Units.Enemys;
 import Game.GameView.BoardPackaeg.*;
 import Game.GameView.Units.Health;
 import Game.GameView.Units.Players.Player;
+import Game.GameView.Units.Units;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -36,6 +37,16 @@ public class Monster extends Enemy {
     @Override
     public Position getPosition() {
         return super.getPosition();
+    }
+
+    @Override
+    public void visit(Tile tile) {
+
+    }
+
+
+    public void accept(Units unit, Position newPosition) {
+        unit.accept(this);
     }
 
     @Override
@@ -74,4 +85,6 @@ public class Monster extends Enemy {
             moveRandomly(movement);
         }
     }
+
+
 }

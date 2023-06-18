@@ -2,11 +2,10 @@ package Game.GameView.Units.Players;
 
 import Game.GameView.BoardPackaeg.*;
 import Game.GameView.Units.Enemys.Enemy;
-import Game.GameView.Units.Health;
+import Game.GameView.Units.Units;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class Warrior extends Player{
     protected int abilityCoolDown;
@@ -83,6 +82,12 @@ public class Warrior extends Player{
         super.visit(e);
     }
 
+
+    @Override
+    public void visit(Tile tile) {
+
+    }
+
     @Override
     public void visit(Wall w) {
         super.visit(w);
@@ -94,6 +99,11 @@ public class Warrior extends Player{
     @Override
     public Position getPosition() {
         return this.getPosition();
+    }
+
+
+    public void accept(Units unit, Position newPosition) {
+        unit.accept(this);
     }
 
 

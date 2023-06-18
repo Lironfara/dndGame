@@ -1,17 +1,23 @@
-import Game.GameView.MessageCallback;
-import Game.GameView.MessagesPrinter;
+import Game.GameView.GameController;
+import Game.GameView.CLI;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
-public class UserInterface() {
-    private MessagesPrinter messagesPrinter;
-    private String path;
+public class UserInterface {
+    private CLI CLI;
+    private GameController gameController;
 
-    public UserInterface(String path){
-        this.path = path;
+    private File file;
+
+    public UserInterface() {
 
     }
 
+
+    public static void main(String[] args) {
+       GameController gameController = new GameController();
+       String path = "C:\\Users\\liron\\Desktop\\BGU\\levels_dir";
+       File file = new File(path);
+       gameController.startGame(gameController.loadLevel(file));
+    }
 }
