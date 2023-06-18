@@ -5,7 +5,7 @@ import Game.GameView.BoardPackaeg.Position;
 import Game.GameView.BoardPackaeg.Tile;
 import Game.GameView.MessageCallback;
 import Game.GameView.BoardPackaeg.Wall;
-import Game.GameView.MessagesPrinter;
+import Game.GameView.CLI;
 import Game.GameView.Units.Enemys.Enemy;
 import Game.GameView.Units.Players.Player;
 
@@ -33,7 +33,7 @@ public abstract class Units extends Tile {
         this.name = name;
         this.healthState = new Health(healthPool,healthPool);
         this.attack = attack;
-        this.messageCallBack = new MessagesPrinter();
+        this.messageCallBack = new CLI();
 
        ///
     }
@@ -53,10 +53,10 @@ public abstract class Units extends Tile {
     }
 
     public void accept(Tile tile){
-        tile.accept(this);
+        tile.visit(this);
     }
     public void accept(Empty empty ){
-        empty.accept(this);
+        empty.visit(this);
     }
     public void accept(Enemy enemy){}
     public void accept(Player player){}
@@ -111,12 +111,12 @@ public abstract class Units extends Tile {
 
 
     public Position moveLeft(){
-        return new Position(new int[]{this.position.getPosition()[0] + 1, this.position.getPosition()[1]});
+        return new Position(new int[]{this.position.getPosition()[0] - 1, this.position.getPosition()[1]});
 
     }
 
     public Position moveUp(){
-        return new Position(new int[]{this.position.getPosition()[0] , this.position.getPosition()[1] - 1});
+        return new Position(new int[]{this.position.getPosition()[0] , this.position.getPosition()[1] -1});
     }
 
     public Position moveDown(){
@@ -124,7 +124,7 @@ public abstract class Units extends Tile {
     }
 
     public Position moveRight(){
-        return new Position(new int[]{this.position.getPosition()[0] - 1, this.position.getPosition()[1]});
+        return new Position(new int[]{this.position.getPosition()[0] + 1, this.position.getPosition()[1]});
 
     }
     public Position doNothing(){

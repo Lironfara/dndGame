@@ -82,6 +82,12 @@ public class Warrior extends Player{
         super.visit(e);
     }
 
+
+    @Override
+    public void visit(Tile tile) {
+
+    }
+
     @Override
     public void visit(Wall w) {
         super.visit(w);
@@ -94,6 +100,7 @@ public class Warrior extends Player{
     public Position getPosition() {
         return this.getPosition();
     }
+
 
     public void accept(Units unit, Position newPosition) {
         unit.accept(this);

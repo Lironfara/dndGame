@@ -1,15 +1,10 @@
-import Game.GameView.BoardPackaeg.Board;
 import Game.GameView.GameController;
-import Game.GameView.MessageCallback;
-import Game.GameView.MessagesPrinter;
+import Game.GameView.CLI;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.List;
-import java.util.Scanner;
 
 public class UserInterface {
-    private MessagesPrinter messagesPrinter;
+    private CLI CLI;
     private GameController gameController;
 
     private File file;

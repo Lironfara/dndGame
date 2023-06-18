@@ -60,15 +60,18 @@ public class Board {
     }
 
     public Board gameTick(Player player, String movement){
-
+        Position prevPosition = player.getPosition();
         Position newPosition = player.gameTick(movement);
         player.interact(map.get(newPosition));
-        updateBoard(player, map.get(newPosition));
+        replace(player, map.get(prevPosition));
 
         List<Enemy> enemies = getEnemies();
         for (Enemy enemy: enemies) {
-            enemy.interact(map.get(enemy.gameTick()));
-            updateBoard(enemy, enemy.position);
+            if (!enemy.isDead()){
+                Position prev = enemy.getPosition();
+                enemy.interact(map.get(enemy.gameTick()));
+                replace(enemy, map.get(prev));
+            }
         }
         return null;
 
@@ -114,19 +117,9 @@ public class Board {
         tiles.add(new Empty(p));
     }
 
-    public void replace(Units unit1, Units unit2) {
-        Position emptyPos = unit2.getPosition();
-        Position unitsPosition = unit1.getPosition();
-        Tile tile1 = unit1;
-        tile1.setPosition(emptyPos);
-        Tile tile2 = unit2;
-        tile2.setPosition(emptyPos);
-        int newUnit= tiles.indexOf(unit2);
-        int newEmpty =tiles.indexOf(unit1);
-        tiles.remove(unit2);
-        tiles.remove(unit1);
-        tiles.add(newUnit,tile1);
-        tiles.add(newEmpty, tile2);
+    public void replace(Tile tile1, Tile tile2) {
+        map.replace(tile1.getPosition() ,tile2);
+        map.replace(tile2.getPosition(), tile1);
     }
 
     @Override

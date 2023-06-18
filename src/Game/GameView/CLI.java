@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MessagesPrinter implements MessageCallback  {
+public class CLI implements MessageCallback   {
+
         @Override
         public String abilityCast(String message) {
             System.out.println(message);
@@ -76,6 +77,10 @@ public class MessagesPrinter implements MessageCallback  {
             return playerSelection;
         }
 
+        public String readerInput(){
+            Scanner scanner = new Scanner(System.in);
+            return scanner.nextLine();
+        }
     }
 
 

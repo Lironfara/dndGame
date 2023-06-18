@@ -1,6 +1,7 @@
 package Game.GameView.Units.Enemys;
 
 import Game.GameView.BoardPackaeg.Position;
+import Game.GameView.BoardPackaeg.Tile;
 import Game.GameView.Units.Players.Player;
 import Game.GameView.Units.Units;
 import Game.GameView.Units.Health;
@@ -42,13 +43,11 @@ public abstract class Enemy extends Units {
     }
 
     public void accept(Player player){
-        this.combat(player);
+        this.visit(player);
     }
 
     //Nothing needs to happen
-    public void accept(Enemy enemy){
-
-    }
+    public void accept(Enemy enemy){}
 
     public void accept(Units unit){
         unit.accept(this);
@@ -61,9 +60,8 @@ public abstract class Enemy extends Units {
     }
 
     @Override
-    public void visit(Enemy e) {
-        e.accept(this);
-    }
+    public void visit(Enemy e)
+    {};
 
     public char toChar(){
         return this.tile;
@@ -73,6 +71,15 @@ public abstract class Enemy extends Units {
     public Position getPosition() {
         return super.getPosition();
     }
+
+    public void interact(Tile tile){
+        this.accept(tile);
+    }
+
+    public void accept(Tile tile){
+        tile.visit(this);
+    }
+
 
     @Override
     public Position moveDown() {

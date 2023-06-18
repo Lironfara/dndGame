@@ -2,7 +2,7 @@ package Game.GameView.Units.Players;
 
 import Game.GameView.BoardPackaeg.*;
 import Game.GameView.MessageCallback;
-import Game.GameView.MessagesPrinter;
+import Game.GameView.CLI;
 import Game.GameView.Units.Enemys.Enemy;
 import Game.GameView.Units.Units;
 
@@ -20,7 +20,7 @@ public abstract class Player extends Units {
         this.experience=0;
         this.playerLevel=1;
         dead = false;
-        this.messageCallBack = new MessagesPrinter();
+        this.messageCallBack = new CLI();
     }
 
     public boolean isDead(){
@@ -70,10 +70,9 @@ public abstract class Player extends Units {
     public void interact(Tile tile) {
         this.accept(tile);
     };
+
     public void accept(Empty empty){
-        Position temp = empty.getPosition();
-        empty.setPosition(this.position);
-        this.position = temp;
+        empty.visit(this);
 
     }
 
@@ -87,9 +86,6 @@ public abstract class Player extends Units {
     };
 
     public void accept(Player player) {
-    }
-    public void accept(Units unit){
-        unit.accept(this);
     }
     public void accept(Enemy enemy) {
         this.combat(enemy);
@@ -111,7 +107,11 @@ public abstract class Player extends Units {
         this.experience = newex;
     }
 
+    public void accept(Tile tile){
+        tile.visit(this);
+    }
 
+    public abstract void visit(Tile tile);
 
     @Override
     public void visit(Wall w) {

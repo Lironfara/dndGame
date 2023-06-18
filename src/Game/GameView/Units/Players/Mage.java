@@ -1,10 +1,7 @@
 package Game.GameView.Units.Players;
 
-import Game.GameView.BoardPackaeg.Empty;
-import Game.GameView.BoardPackaeg.Position;
-import Game.GameView.BoardPackaeg.Range;
+import Game.GameView.BoardPackaeg.*;
 import Game.GameView.Units.Enemys.Enemy;
-import Game.GameView.BoardPackaeg.Wall;
 import Game.GameView.Units.Units;
 
 import java.util.ArrayList;
@@ -101,6 +98,11 @@ public class Mage extends Player {
     }
 
     @Override
+    public void visit(Tile tile) {
+
+    }
+
+    @Override
     public void visit(Wall w) {
         super.visit(w);
     }
@@ -109,6 +111,7 @@ public class Mage extends Player {
     public Position getPosition() {
         return super.getPosition();
     }
+
 
 
     public void accept(Units unit, Position newPosition) {

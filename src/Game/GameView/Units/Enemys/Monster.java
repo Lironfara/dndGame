@@ -39,6 +39,12 @@ public class Monster extends Enemy {
         return super.getPosition();
     }
 
+    @Override
+    public void visit(Tile tile) {
+
+    }
+
+
     public void accept(Units unit, Position newPosition) {
         unit.accept(this);
     }

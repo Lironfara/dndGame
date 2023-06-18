@@ -2,9 +2,7 @@ package Game.GameView;
 
 import Game.GameView.BoardPackaeg.Board;
 import Game.GameView.BoardPackaeg.Position;
-import Game.GameView.BoardPackaeg.Tile;
 import Game.GameView.BoardPackaeg.TileFactory;
-import Game.GameView.Units.Enemys.Enemy;
 import Game.GameView.Units.Players.Player;
 
 import java.io.*;
@@ -15,9 +13,10 @@ import java.util.Scanner;
 
 public class GameController {
 
-    private MessageCallback messageCallback;
+    private CLI cli;
     public GameController(){
-        messageCallback = new MessagesPrinter();
+
+        this.cli = new CLI();
     }
 
     public List<List<String>> loadLevel(File file){
@@ -49,12 +48,12 @@ public class GameController {
 
     public Player choosePlayer(List<List<String>> cuurentLevel){
         Player player = null;
-        Scanner scanner = new Scanner(System.in);
-        messageCallback.gameStartOutPut();
-        int dx = scanner.nextInt();
-        while (1>dx && 6<dx){
-           messageCallback.gameStartOutPut();
-            dx = scanner.nextInt();
+        cli.gameStartOutPut();
+        String dx = cli.readerInput();
+
+        while (dx.compareTo("1")>1 && dx.compareTo("6")>0){
+            cli.gameStartOutPut();
+           dx = cli.readerInput();
         }
         TileFactory tileFactory = new TileFactory();
         for(int height=0; height<cuurentLevel.get(0).size(); height++){
@@ -64,8 +63,8 @@ public class GameController {
 
                if (line.charAt(width)=='@'){
                    Position playerPosition = position;
-                   player= tileFactory.producePlayer(dx-1, playerPosition);
-                   messageCallback.choosePlayerSelection("You have selected:\n " + player.getName());
+                   player= tileFactory.producePlayer(Integer.parseInt(dx), playerPosition);
+                   cli.choosePlayerSelection("You have selected:\n " + player.getName());
                }
            }
 
@@ -82,9 +81,9 @@ public class GameController {
         Board board = new Board(currentLevelMap, player);
         board.toString();
         while (!player.isDead() && currentLevel<=4){
-            messageCallback.printBoard(board.toString());
-
-            board.gameTick(player, messageCallback.playerMoveSelection());
+            cli.printBoard(board.toString());
+            board.gameTick(player, cli.playerMoveSelection());
+            cli.printBoard(board.toString());
             if (board.getNumberOfEnemies()==0){
                 currentLevel++;
                 currentLevelMap =  Collections.singletonList(levels.get(currentLevel - 1));
