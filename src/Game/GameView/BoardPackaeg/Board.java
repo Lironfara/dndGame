@@ -62,6 +62,7 @@ public class Board {
     public Board gameTick(Player player, String movement){
         Position prevPosition = player.getPosition();
         Position newPosition = player.gameTick(movement);
+        Tile t = map.get(newPosition);
         player.interact(map.get(newPosition));
         replace(player, map.get(prevPosition));
 
@@ -118,8 +119,8 @@ public class Board {
     }
 
     public void replace(Tile tile1, Tile tile2) {
-        map.replace(tile1.getPosition() ,tile2);
-        map.replace(tile2.getPosition(), tile1);
+        map.replace(tile1.getPosition() ,tile1,tile2);
+        map.replace(tile2.getPosition(), tile2,tile1);
     }
 
     @Override
