@@ -5,6 +5,7 @@ import Game.GameView.BoardPackaeg.Position;
 import Game.GameView.BoardPackaeg.Tile;
 import Game.GameView.MessageCallback;
 import Game.GameView.BoardPackaeg.Wall;
+import Game.GameView.MessagesPrinter;
 import Game.GameView.Units.Enemys.Enemy;
 import Game.GameView.Units.Players.Player;
 
@@ -32,8 +33,13 @@ public abstract class Units extends Tile {
         this.name = name;
         this.healthState = new Health(healthPool,healthPool);
         this.attack = attack;
+        this.messageCallBack = new MessagesPrinter();
 
        ///
+    }
+
+    public void interact(Tile tile){
+        tile.accept(this);
     }
 
 
@@ -44,11 +50,6 @@ public abstract class Units extends Tile {
 
     public Position getPosition(){
         return this.position;
-    }
-
-
-    public void gameTick() {
-        describe();
     }
 
     public void accept(Tile tile){
@@ -82,16 +83,6 @@ public abstract class Units extends Tile {
         return defense;
     }
 
-    public String describe() {
-         String s = String.format("%s\t\tHealth: %s\t\tAttack: %d\t\tDefense: %d", getName(), getHealth(), getAttack(), getDefense());
-         return messageCallBack.gameTickDesc(s);
-    }
-
-
-    // This unit attempts to interact with another tile.
-    public void interact(Tile tile){
-		///
-    }
 
     public void visit(Empty e){
         e.accept(this);

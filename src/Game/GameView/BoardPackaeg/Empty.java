@@ -13,10 +13,18 @@ public class Empty extends Tile {
     }
 
     //Same operation for both enemy and player
+    public boolean accept(Units unit, Position newPosition) {
+         unit.setPosition(newPosition);
+         return true;
+    }
+
+    @Override
     public void accept(Units unit) {
+        unit.accept(this);
     }
 
     public void accept(Tile tile) {
+
         tile.accept(this);
     }
 

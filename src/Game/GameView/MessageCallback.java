@@ -15,5 +15,6 @@ public interface MessageCallback {
 
      void printBoard(String bord);
 
+     String playerMoveSelection();
 
 }

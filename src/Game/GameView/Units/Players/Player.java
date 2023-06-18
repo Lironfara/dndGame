@@ -1,14 +1,10 @@
 package Game.GameView.Units.Players;
 
-import Game.GameView.BoardPackaeg.Empty;
-import Game.GameView.BoardPackaeg.Position;
-import Game.GameView.BoardPackaeg.Range;
+import Game.GameView.BoardPackaeg.*;
 import Game.GameView.MessageCallback;
+import Game.GameView.MessagesPrinter;
 import Game.GameView.Units.Enemys.Enemy;
 import Game.GameView.Units.Units;
-import Game.GameView.BoardPackaeg.Wall;
-
-import java.util.Random;
 
 public abstract class Player extends Units {
     protected int experience;
@@ -24,6 +20,7 @@ public abstract class Player extends Units {
         this.experience=0;
         this.playerLevel=1;
         dead = false;
+        this.messageCallBack = new MessagesPrinter();
     }
 
     public boolean isDead(){
@@ -50,18 +47,34 @@ public abstract class Player extends Units {
         messageCallBack.levelUp(this.name, this.playerLevel);
     }
 
-    public void gameTick(){
-        move();
+    public Position gameTick(String movment){
+        Position newPosition =  move(movment);
         if (experience >= 50*playerLevel){
             levelUp();
         }
-        super.gameTick();
+        describe();
+        return newPosition;
+    }
+
+    public String describe() {
+        String s = String.format("%s\t\tHealth: %s\t\tAttack: %d\t\tDefense: %d", getName(), getHealth(), getAttack(), getDefense());
+        return messageCallBack.gameTickDesc(s);
     }
 
     @Override
     public void initialize(Position position) {
         super.initialize(position);
         this.position = position;
+    }
+
+    public void interact(Tile tile) {
+        this.accept(tile);
+    };
+    public void accept(Empty empty){
+        Position temp = empty.getPosition();
+        empty.setPosition(this.position);
+        this.position = temp;
+
     }
 
     public void abilityCastMessage(String m){};
@@ -114,9 +127,6 @@ public abstract class Player extends Units {
         return this.name;
     }
 
-    public Position move(){
-        return this.position;
-    }
 
     @Override
     public Position getPosition() {
@@ -126,20 +136,20 @@ public abstract class Player extends Units {
 
 
 
-    public Position move (char movement){
-        if (movement=='a'){
+    public Position move (String movement){
+        if (movement.equals("a")){
             return moveLeft();
         }
-        if (movement=='w'){
+        if (movement.equals("w")){
             return moveUp();
         }
-        if (movement=='s'){
+        if (movement.equals("s")){
             return moveDown();
         }
-        if (movement=='d'){
+        if (movement.equals("d")){
             return moveRight();
         }
-        if (movement=='e'){
+        if (movement.equals("e")){
            this.abilityCast();
         }
         else{

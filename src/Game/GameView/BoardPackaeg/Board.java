@@ -17,19 +17,28 @@ public class Board {
     private Map<Position, Tile> map = new HashMap<>();
     private Map<Position, Units> mapOfUnits = new TreeMap<>();
     private List<Units> listOfUnitsInBoard = new ArrayList<>();
-    private Position playerPosition ;
+    private int numberOfEnemies;
+    private String boardOutput;
+    private int height;
+    private int width;
+    private List<List<String>> boardMapForToString;
+    private Player player;
 
     public Board(List<List<String>> cuurentLevel, Player player) {
         if (!(this.map == null)) {
             map = new TreeMap<>();
             tiles = new ArrayList<>();
         }
-        for (int height = 0; height < cuurentLevel.get(0).size(); height++) {
-            String line = cuurentLevel.get(0).get(height);
-            for (int width = 0; width < line.length(); width++) {
-                Position position = new Position(new int[]{width, height});
-                Tile t = tileFactory.generate(line.charAt(width), position);
-                if (line.charAt(width)=='@'){
+        this.player = player;
+        this.boardMapForToString = cuurentLevel;
+        this.height = cuurentLevel.get(0).size();
+        this.width = cuurentLevel.get(0).get(0).length();
+        for (int i = 0; i < height; i++) {
+            String line = cuurentLevel.get(0).get(i);
+            for (int j = 0; j < width; j++) {
+                Position position = new Position(new int[]{i, j});
+                Tile t = tileFactory.generate(line.charAt(j), position);
+                if (line.charAt(j)=='@'){
                     map.put(position, player);
                 }
                 else{
@@ -39,16 +48,48 @@ public class Board {
         }
     }
 
+    public void gameTick(String movement){
+        Position p = player.gameTick(movement);
+        player.interact(map.get(p));
+        for (Enemy enemy: getEnemies()) {
+            if (!enemy.isDead()){
+                Position p1 = enemy.gameTick();
+            }
+
+        }
+    }
+
+    public Board gameTick(Player player, String movement){
+
+        Position newPosition = player.gameTick(movement);
+        player.interact(map.get(newPosition));
+        updateBoard(player, map.get(newPosition));
+
+        List<Enemy> enemies = getEnemies();
+        for (Enemy enemy: enemies) {
+            enemy.interact(map.get(enemy.gameTick()));
+            updateBoard(enemy, enemy.position);
+        }
+        return null;
+
+
+    }
+
+
 
     public List<Enemy> getEnemies(){
         List<Enemy> enemies = new ArrayList<>();
-        System.out.println(map.values());
         for (Tile tile: map.values()) {
             if (tile.getTile()!='.' && tile.getTile()!='#' && tile.getTile()!='@'){
                 enemies.add(tileFactory.produceEnemy(tile.getTile(), tile.getPosition()));
             }
         };
+        this.numberOfEnemies = enemies.size();
         return enemies;
+    }
+
+    public int getNumberOfEnemies(){
+        return this.numberOfEnemies;
     }
 
 
@@ -59,15 +100,8 @@ public class Board {
         return tile;
     }
 
-    public void gameTick(){
-        for (Units unit : listOfUnitsInBoard) {
-            //gameTick(unit);
-        }
-    }
 
-    //public void gameTick(Player p);
 
-    public void updateBoard(){};
 
     public void remove(Enemy e) {
         tiles.remove(e);
@@ -80,17 +114,17 @@ public class Board {
         tiles.add(new Empty(p));
     }
 
-    public void replace(Units units, Empty empty) {
-        Position emptyPos = empty.getPosition();
-        Position unitsPosition = units.getPosition();
-        Tile tile1 = units;
+    public void replace(Units unit1, Units unit2) {
+        Position emptyPos = unit2.getPosition();
+        Position unitsPosition = unit1.getPosition();
+        Tile tile1 = unit1;
         tile1.setPosition(emptyPos);
-        Tile tile2 = empty;
+        Tile tile2 = unit2;
         tile2.setPosition(emptyPos);
-        int newUnit= tiles.indexOf(empty);
-        int newEmpty =tiles.indexOf(units);
-        tiles.remove(empty);
-        tiles.remove(units);
+        int newUnit= tiles.indexOf(unit2);
+        int newEmpty =tiles.indexOf(unit1);
+        tiles.remove(unit2);
+        tiles.remove(unit1);
         tiles.add(newUnit,tile1);
         tiles.add(newEmpty, tile2);
     }
@@ -98,17 +132,19 @@ public class Board {
     @Override
     public String toString() {
         String board = "";
-        tiles = tiles.stream().sorted().collect(Collectors.toList());
-        int i = 0;
-        for (Tile tile: tiles) {
-            if(tile.getPosition().getPosition()[1] == i){
-                board = board +tile.getTile();
-            }
-            else {
-                board = board + "\n" + tile.getTile();
-                i++;
+        List<Character> lines = new ArrayList<>();
+        for (Tile tile: map.values()) {
+            lines.add(tile.getTile());
+        }
+        for (int i=0; i<lines.size(); i++){
+            board = board+lines.get(i);
+            if (i!=0 && i%49==48){
+                if (i!=(lines.size()-1)){
+                    board = board+"\n";
+                }
             }
         }
+
         return board;
     }
 }

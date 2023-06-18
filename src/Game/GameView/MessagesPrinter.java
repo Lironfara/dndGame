@@ -1,5 +1,10 @@
 package Game.GameView;
-    public class MessagesPrinter implements MessageCallback  {
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class MessagesPrinter implements MessageCallback  {
         @Override
         public String abilityCast(String message) {
             System.out.println(message);
@@ -56,6 +61,22 @@ package Game.GameView;
         public void choosePlayerSelection(String s) {
             System.out.println(s);
         }
+
+        public String playerMoveSelection(){
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Choose action");
+            String playerSelection = scanner.nextLine();
+            List<String> validMoves = new ArrayList<>();
+            validMoves.add("w"); validMoves.add("s"); validMoves.add("d"); validMoves.add("a");
+            validMoves.add("q"); validMoves.add("e");
+            while (!validMoves.contains(playerSelection)){
+                System.out.println("Not a valid input. Try again (a/w/d/s/e/q)");
+                playerSelection = scanner.nextLine();
+            }
+            return playerSelection;
+        }
+
     }
+
 
 

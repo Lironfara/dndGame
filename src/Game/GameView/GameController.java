@@ -73,23 +73,23 @@ public class GameController {
         return player;
     }
 
-    public Board gameTick(Board board, Player player){
-        List<Enemy> enemies = board.getEnemies();
-        for (Enemy enemy: enemies) {
-            enemy.gameTick();
-        }
-        player.gameTick();
-        return board;
-    }
 
 
     public Player startGame(List<List<String>> levels) {
         int currentLevel = 1;
-        List<List<String>> cuurentLevel = Collections.singletonList(levels.get(currentLevel - 1));
-        Player player = choosePlayer(cuurentLevel);
-        Board board = new Board(cuurentLevel, player);
+        List<List<String>> currentLevelMap = Collections.singletonList(levels.get(currentLevel - 1));
+        Player player = choosePlayer(currentLevelMap);
+        Board board = new Board(currentLevelMap, player);
+        board.toString();
         while (!player.isDead() && currentLevel<=4){
-            gameTick(board, player);
+            messageCallback.printBoard(board.toString());
+
+            board.gameTick(player, messageCallback.playerMoveSelection());
+            if (board.getNumberOfEnemies()==0){
+                currentLevel++;
+                currentLevelMap =  Collections.singletonList(levels.get(currentLevel - 1));
+                board = new Board(currentLevelMap, player);
+            }
         }
         return player;
     }

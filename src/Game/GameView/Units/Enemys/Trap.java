@@ -61,12 +61,14 @@ public class Trap extends Enemy{
             return '.';
     }
 
-
-
-
     @Override
     public Position getPosition() {
         return super.getPosition();
+    }
+
+
+    public void accept(Units unit, Position newPosition) {
+        unit.accept(this);
     }
 
 }
