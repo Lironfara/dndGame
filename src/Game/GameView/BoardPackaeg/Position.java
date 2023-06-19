@@ -31,6 +31,9 @@ public class Position implements Comparable<Position>{
         if (this.position[0] == o.position[0] && this.position[1] > o.position[1]){
             return 1;
         }
+        if (this.position[0] == o.position[0] && this.position[1] < o.position[1]){
+            return -1;
+        }
         return 0;
     }
 }

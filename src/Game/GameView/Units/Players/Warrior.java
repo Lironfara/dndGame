@@ -98,7 +98,7 @@ public class Warrior extends Player{
 
     @Override
     public Position getPosition() {
-        return this.getPosition();
+        return this.position;
     }
 
 

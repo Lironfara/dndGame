@@ -33,6 +33,7 @@ public class Empty extends Tile {
 
     public void visit(Player player) {
         Position temp = player.position;
+        player.initialize(this.position);
         player.setPosition(this.position);
         this.setPosition(temp);
     }
