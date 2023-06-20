@@ -15,14 +15,17 @@ public class Empty extends Tile {
         this.position = position;
     }
 
-    //Same operation for both enemy and player
-    public boolean accept(Units unit, Position newPosition) {
-         unit.setPosition(newPosition);
-         return true;
+    public Empty (Position position,char c){
+        super('X');
+        this.initialize(position);
+        this.position = position;
     }
 
     //Who visits me? the unit
 
+    public void setPosition(Position position){
+        this.position = position;
+    }
 
     @Override
     public void visit(Enemy enemy) {
@@ -39,10 +42,11 @@ public class Empty extends Tile {
 
 
     @Override
-    public void visit(Empty empty) {}
+    public void visit(Empty empty) {
+    }
 
 
-    @Override
+
     public void visit(Wall wall) {}
 
     @Override
@@ -52,7 +56,6 @@ public class Empty extends Tile {
 
 
     public void accept(Tile tile) {
-
         tile.visit(this);
     }
 
@@ -61,12 +64,12 @@ public class Empty extends Tile {
 
     @Override
     public void accept(Enemy enemy) {
-        enemy.visit(this);
+
     }
 
     @Override
     public void accept(Player player) {
-        player.visit(this);
+
     }
 
 

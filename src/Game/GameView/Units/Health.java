@@ -8,6 +8,10 @@ public class Health {
         this.healthAmount= healthAmount;
         this.healthPool= healthPool;
     }
+
+    public int getPool(){
+        return this.healthPool;
+    }
     public int getHealthPool(){
         return healthPool;
     }

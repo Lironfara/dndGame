@@ -39,7 +39,8 @@ public abstract class Enemy extends Units {
     }
 
     public void onDeath(){
-        this.remove();
+
+        isDead = true;
     }
 
     public void accept(Player player){
@@ -47,21 +48,21 @@ public abstract class Enemy extends Units {
     }
 
     //Nothing needs to happen
-    public void accept(Enemy enemy){}
-
-    public void accept(Units unit){
-        unit.accept(this);
+    public void accept(Enemy enemy){
     }
+
 
 
     @Override
     public void visit(Player p) {
-        p.accept(this);
+
+
     }
 
     @Override
     public void visit(Enemy e)
-    {};
+    {
+    };
 
     public char toChar(){
         return this.tile;
@@ -69,15 +70,25 @@ public abstract class Enemy extends Units {
 
     @Override
     public Position getPosition() {
-        return super.getPosition();
+        return this.position;
     }
 
-    public void interact(Tile tile){
+    public void setPosition(Position newPosition){
+
+        super.setPosition(newPosition);
+        this.position = newPosition;
+    }
+
+    public void interact(Tile tile, Player player){
         this.accept(tile);
     }
 
+    public Position gameTick(Player player){
+        return this.position;
+    }
     public void accept(Tile tile){
         tile.visit(this);
+
     }
 
 
@@ -144,7 +155,7 @@ public abstract class Enemy extends Units {
     }
 
     public void victory(Player player){
-        messageCallBack.combatResult(this.name + " won the combat agains "+ player.getName()+ "."+ "Game over for "+player.getName());
+        messageCallBack.combat(this.name + " won the combat agains "+ player.getName()+ "."+ "Game over for "+player.getName());
         player.onDeath();
 
     }
