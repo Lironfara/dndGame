@@ -16,7 +16,7 @@ public class UserInterface {
 
     public static void main(String[] args) {
        GameController gameController = new GameController();
-       String path = "C:\\Users\\liron\\Desktop\\BGU\\levels_dir";
+       String path = "C:\\Users\\Yuval\\Desktop\\levels_dir\\levels_dir";
        File file = new File(path);
        gameController.startGame(gameController.loadLevel(file));
     }

@@ -75,7 +75,7 @@ public class Monster extends Enemy {
             int dx = this.position.getPosition()[0]- player.position.getPosition()[0];
             int dy = this.position.getPosition()[1]- player.position.getPosition()[1];
             if (Math.abs(dx) > Math.abs(dy)){
-                if (Math.abs(dx) > 0){
+                if (dx > 0){
                     return moveLeft(); //To check to new position is valid
                 }
                 else {
@@ -84,7 +84,7 @@ public class Monster extends Enemy {
 
             }
             else{
-                if (Math.abs(dy)>0){
+                if (dy>0){
                     return moveUp();
                 }
                 else {
@@ -99,9 +99,7 @@ public class Monster extends Enemy {
 
     }
 
-    public void combat(){
 
-    }
 
 
 }

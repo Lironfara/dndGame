@@ -45,10 +45,10 @@ public class Warrior extends Player{
             }
             Collections.shuffle(enemiesOnRange);
 
-            this.health.setHealthAmount(health.getHealthAmount()+10*defensePoints);
-            messageCallback.abilityCast(name + " cast "+ specialAbilityName+" , healing for "+ 10*defensePoints);
+            this.setHealthAmount(health.getHealthAmount()+10*defense);
+            messageCallback.abilityCast(name + " cast "+ specialAbilityName+" , healing for "+ 10*defense);
 
-            if (enemiesOnBoard.size()>=1) {
+            if (enemiesOnRange.size()>=1) {
                 Enemy toAttack = enemiesOnRange.get(0); //Gets random enemy
                 toAttack.setHealth(toAttack.getHealth() - this.health.getHealthPool() / 10);
                 if (toAttack.getHealth() <= 0) {
@@ -72,13 +72,16 @@ public class Warrior extends Player{
         super.levelUp();
         remainingCoolDown =0;
         health.setHealthPool(health.getHealthPool()+(5*playerLevel));
-        attackPoints = attackPoints+(2*playerLevel);
-        defensePoints = defensePoints+(playerLevel);
+        attack = attack+(2*playerLevel);
+        defense = defense+(playerLevel);
 
     }
 
+    @Override
     public String describe(){
-        String s = String.format("%s\t\tHealth: %s\t\tAttack: %d\t\tDefense: %s\t\texperience:%s","%s\t\tCool down:%s" , getName(), getHealth(), getAttack(), getDefense(), getExperience(), getAttackPoints(), remainingCoolDown,"/", abilityCoolDown);
+
+        String s = super.describe()+  " Cooldown: "+ abilityCoolDown + "/n";
+
         return s;
 
     }

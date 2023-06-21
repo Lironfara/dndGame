@@ -46,8 +46,8 @@ public abstract class Player extends Units {
         this.playerLevel++;
         this.health.setHealthPool(health.getHealthPool()+(10*playerLevel));
         this.health.setHealthAmount(health.getHealthPool());
-        this.attackPoints =attackPoints+ 4*playerLevel;
-        this.defensePoints =defensePoints+ playerLevel;
+        this.attack =attack+ 4*playerLevel;
+        this.defense =defense+ playerLevel;
         messageCallBack.levelUp(this.name, this.playerLevel);
     }
 
@@ -95,22 +95,28 @@ public abstract class Player extends Units {
 
     }
     public  void accept(Enemy enemy) {
-
         combat(enemy);
     }
 
 
     public void combat(Enemy enemy){
-        int playerAttacker = new Random().nextInt(0, this.attackPoints);
+        int playerAttacker = new Random().nextInt(0,getAttack());
+        messageCallBack.combatResult(this.name + " rolled " + playerAttacker + " attack points");
         int rollDefender = new Random().nextInt(0, enemy.getDefense());
+        messageCallBack.combatResult(enemy.getName() + " rolled " + rollDefender + " defense points");
         if (playerAttacker - rollDefender > 0) {
-            this.experience = this.experience + enemy.getExperienceValue();
-            enemy.remove();
-            super.setPosition(enemy.getPosition());
-            setPosition(enemy.getPosition());
+            enemy.setHealth(enemy.getHealth() - (playerAttacker - rollDefender));
+            if (enemy.getHealth() <= 0) {
+                victory(enemy);
+                this.experience = this.experience + enemy.getExperienceValue();
+                enemy.remove();
+                super.setPosition(enemy.getPosition());
+                setPosition(enemy.getPosition());
+            }
         }
-
-
+        else{
+            messageCallBack.combatResult(this.name + " attacked " + enemy.getName() + " and damaged him by " + (playerAttacker - rollDefender) + " points");
+        }
     }
 
     public void victory(Units unit){
@@ -173,5 +179,9 @@ public abstract class Player extends Units {
         else{
             return doNothing();
         }
+    }
+    public String describe(){
+
+        return "Player: " + this.name + " Health: " + this.health.getHealthAmount() + "/" + this.health.getHealthPool() + " Attack: " + this.attack + " Defense: " + this.defense + " Level: " + this.playerLevel + " Experience: " + this.experience + "/"+ 50*playerLevel + "\n";
     }
 }

@@ -37,7 +37,7 @@ public class Rogue extends Player{
     public void levelUp() {
         super.levelUp();
         this.currentEnergy=100;
-        this.attackPoints = attackPoints+(3*playerLevel);
+        this.attack = attack+(3*playerLevel);
 
     }
 
@@ -56,10 +56,10 @@ public class Rogue extends Player{
                 }
             }
             for (Enemy toAttack:enemiesOnRange) {
-                int playerAttacker = new Random().nextInt(0, this.attackPoints);
+                int playerAttacker = new Random().nextInt(0, getAttack());
                 int rollDefender = new Random().nextInt(0,toAttack.getDefense());
                 if (playerAttacker-rollDefender >0){
-                toAttack.setHealth(toAttack.getHealth() - this.attackPoints);
+                toAttack.setHealth(toAttack.getHealth() - this.attack);
                 if (toAttack.getHealth() <= 0) {
                     this.setExperience(toAttack.getExperienceValue() + experience);
                     toAttack.onDeath();
@@ -115,6 +115,11 @@ public class Rogue extends Player{
         return super.getPosition();
     }
 
+    @Override
+    public String describe(){
+        String s = super.describe() + " , Energy: " + currentEnergy + "/" + 100 + "/n";
+        return s;
+    }
     public void accept(Units unit, Position newPosition) {
         unit.accept(this);
     }

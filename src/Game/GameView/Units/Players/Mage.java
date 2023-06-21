@@ -66,7 +66,7 @@ public class Mage extends Player {
             while (hits < hitsCount && enemiesOnRange.size()>0) {
                 Collections.shuffle(enemiesOnRange);
                 Enemy toAttack = enemiesOnRange.get(0);
-                int playerAttacker = new Random().nextInt(0, this.attackPoints);
+                int playerAttacker = new Random().nextInt(0, getAttack());
                 int rollDefender = new Random().nextInt(0,toAttack.getDefense());
                 if (playerAttacker-rollDefender >0){
                     toAttack.setHealth(toAttack.getHealth() - spellPower);
@@ -137,6 +137,12 @@ public class Mage extends Player {
         return super.getPosition();
     }
 
+    @Override
+    public String describe(){
+        String s= super.describe() + "Mana: " + currentMana + "/" + manaPool + " | Spell Power: " + spellPower + " | Mana Cost: " + manaCost + "/n";
+
+        return s;
+    }
 
 
     public void accept(Units unit, Position newPosition) {

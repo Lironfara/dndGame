@@ -102,7 +102,7 @@ public class Board {
                 }
             }
         }
-        return printBoard();
+        return player.describe()+printBoard();
     }
 
 

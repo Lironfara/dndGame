@@ -10,13 +10,10 @@ import Game.GameView.Units.Players.Player;
 public abstract class Units extends Tile {
     protected String Name;
     protected Health health;
-    protected int attackPoints;
-    protected int defensePoints;
-
 
     protected char tile;
     protected String name;
-    protected Health healthState;
+
     protected int attack;
     protected int defense;
 
@@ -27,7 +24,7 @@ public abstract class Units extends Tile {
         this.defense = defense;
         this. tile = tile;
         this.name = name;
-        this.healthState = new Health(healthPool,healthPool);
+        this.health = new Health(healthPool,healthPool);
         this.attack = attack;
         this.messageCallBack = new CLI();
 
@@ -58,7 +55,7 @@ public abstract class Units extends Tile {
     }
 
     public int getHealth(){
-        return healthState.healthAmount;
+        return health.healthAmount;
     };
     public void setHealth(int i) {this.health.setHealthAmount(i);}
 
@@ -106,17 +103,23 @@ public abstract class Units extends Tile {
     }
 
     public int getAttackPoints(){
-        return this.attackPoints;
-    }
-    public int getDefensePoints(){
-        return this.defensePoints;
+        return this.attack;
     }
     public void setAttackPoints(int i){
-        this.attackPoints=i;
+        this.attack=i;
     }
     public void setDefensePoints(int i){
-        this.defensePoints=i;
+        this.defense=i;
     }
 
 
+    public void setHealthAmount(int i) {
+        if(!(this.health.getHealthPool()<i)){
+            this.health.setHealthAmount(i);
+        }
+        else
+            this.health.setHealthAmount(health.healthPool);
+
+
+    }
 }

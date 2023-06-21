@@ -9,9 +9,8 @@ import java.util.Scanner;
 public class CLI implements MessageCallback   {
 
         @Override
-        public String abilityCast(String message) {
+        public void abilityCast(String message) {
             System.out.println(message);
-            return message;
 
         }
 
@@ -28,7 +27,7 @@ public class CLI implements MessageCallback   {
     }
 
 
-    public String battleResult(String message) {
+    public String combatResult(String message) {
             System.out.println(message);
             return message;
         }
@@ -82,6 +81,7 @@ public class CLI implements MessageCallback   {
 
     @Override
     public void describe(String s) {
+        System.out.println(s);
 
     }
 

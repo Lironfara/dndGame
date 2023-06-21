@@ -9,6 +9,7 @@ import Game.GameView.Units.Health;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public abstract class Enemy extends Units {
 
@@ -20,6 +21,8 @@ public abstract class Enemy extends Units {
 
     public Enemy(char tile, String name, int healthState, int attackPoints, int defensePoints, int experienceValue){
         super(tile, name, healthState, attackPoints, defensePoints);
+        this.attack= attackPoints;
+        this.defense = defensePoints;
         this.experienceValue = experienceValue;
         this.randomMovments = new ArrayList<>();
         randomMovments.add(0, 'w');
@@ -55,6 +58,7 @@ public abstract class Enemy extends Units {
 
     @Override
     public void visit(Player p) {
+        p.accept(this);
 
 
     }
@@ -157,6 +161,22 @@ public abstract class Enemy extends Units {
     public void victory(Player player){
         messageCallBack.combat(this.name + " won the combat agains "+ player.getName()+ "."+ "Game over for "+player.getName());
         player.onDeath();
+
+    }
+
+    public void combat(Player player) {
+        int attacker = new Random().nextInt(0, getAttack());
+        messageCallBack.combatResult(this.name + " rolled " + attacker + " attack points");
+        int rollDefender = new Random().nextInt(0, player.getDefense());
+        messageCallBack.combatResult(player.getName() + " rolled " + rollDefender + " defense points");
+        if (attacker - rollDefender > 0) {
+            player.setHealth(player.getHealth() - (attacker - rollDefender));
+            if (player.getHealth() <= 0) {
+                victory(player);
+            }
+        } else {
+            messageCallBack.combatResult(this.name + " attacked " + player.getName() + " and damaged him by " + (attacker - rollDefender) + " points");
+        }
 
     }
 

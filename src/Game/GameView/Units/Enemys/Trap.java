@@ -14,7 +14,6 @@ public class Trap extends Enemy{
     protected int invisibilityTime;
     protected int tickCount;
     protected boolean visible;
-    protected int attackPoints;
     protected char trapTile;
     protected MessageCallback CLI;
 
@@ -26,7 +25,7 @@ public class Trap extends Enemy{
         this.invisibilityTime = invisibilityTime;
         this.tickCount=0;
         this.visible=true;
-        this.attackPoints = attackPoints;
+
         this.trapTile = c;
         this.CLI = new CLI();
     }
@@ -55,20 +54,8 @@ public class Trap extends Enemy{
 
 
 
-    public void combat(Units unit) {
-        int rollAttacker = new Random().nextInt(0, this.attackPoints);
-        int rollDefender = new Random().nextInt(0, unit.getDefense());
-        CLI.combat(this.Name + " rolled "+ rollAttacker + " attack points");
-        CLI.combat(this.Name + " rolled "+ rollAttacker + " attack points");
-        if ((rollAttacker - rollDefender)>0){
-            unit.setHealth(unit.getHealth()- (rollAttacker-rollDefender));
-            CLI.combat(this.Name+" dealt "+ (rollAttacker-rollDefender)+" damage to "+unit.getName());
-            if (unit.getHealth() <= 0){
-                unit.victory(this);
-            }
-        }
 
-    }
+
 
 
     @Override

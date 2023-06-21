@@ -5,7 +5,7 @@ import Game.GameView.Units.Players.Player;
 public interface MessageCallback {
 
 
-     String abilityCast(String s);
+     void abilityCast(String s);
      String onDeath(String name);
      void combat(String s);
      String levelUp(String name, int newLevel);
@@ -22,4 +22,5 @@ public interface MessageCallback {
 
      void describe(String s);
 
+    String combatResult(String s);
 }
