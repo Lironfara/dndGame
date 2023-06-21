@@ -78,6 +78,10 @@ public class TileFactory {
             return produceEnemy(c,position);
 
     }
+
+    public Tile onDeath(Position position){
+        return new Empty(position, 'X');
+    }
     public Enemy produceEnemy(char tile, Position position) {
         Enemy output = enemiesMap.get(tile).get();
         output.initialize(position);

@@ -1,5 +1,7 @@
 package Game.GameView;
 
+import Game.GameView.Units.Players.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -20,12 +22,13 @@ public class CLI implements MessageCallback   {
             return message;
         }
 
-        @Override
-        public String combatResult(String s) {
-            return null; ///To complete
-        }
+    @Override
+    public void combat(String s) {
+        System.out.println(s);
+    }
 
-        public String battleResult(String message) {
+
+    public String battleResult(String message) {
             System.out.println(message);
             return message;
         }
@@ -55,7 +58,7 @@ public class CLI implements MessageCallback   {
 
         @Override
         public void printBoard(String board) {
-            System.out.println(board);
+            System.out.println(board+"\n");
         }
 
         @Override
@@ -77,10 +80,16 @@ public class CLI implements MessageCallback   {
             return playerSelection;
         }
 
-        public String readerInput(){
+    @Override
+    public void describe(String s) {
+
+    }
+
+    public String readerInput(){
             Scanner scanner = new Scanner(System.in);
             return scanner.nextLine();
         }
+
     }
 
 

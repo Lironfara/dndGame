@@ -1,15 +1,11 @@
 package Game.GameView.Units;
 
-import Game.GameView.BoardPackaeg.Empty;
 import Game.GameView.BoardPackaeg.Position;
 import Game.GameView.BoardPackaeg.Tile;
 import Game.GameView.MessageCallback;
-import Game.GameView.BoardPackaeg.Wall;
 import Game.GameView.CLI;
 import Game.GameView.Units.Enemys.Enemy;
 import Game.GameView.Units.Players.Player;
-
-import java.util.Random;
 
 public abstract class Units extends Tile {
     protected String Name;
@@ -35,13 +31,13 @@ public abstract class Units extends Tile {
         this.attack = attack;
         this.messageCallBack = new CLI();
 
-       ///
+
     }
 
-    public void interact(Tile tile){
-        tile.accept(this);
+    @Override
+    public char getTile() {
+        return super.getTile();
     }
-
 
     protected void initialize(char tile, int[] position, MessageCallback messageCallback){
         this.messageCallBack = messageCallback;
@@ -52,15 +48,6 @@ public abstract class Units extends Tile {
         return this.position;
     }
 
-    public void accept(Tile tile){
-        tile.visit(this);
-    }
-    public void accept(Empty empty ){
-        empty.visit(this);
-    }
-    public void accept(Enemy enemy){}
-    public void accept(Player player){}
-    public void accept(Wall wall){}
 
     public int defend(){
         return 0;
@@ -84,24 +71,11 @@ public abstract class Units extends Tile {
     }
 
 
-    public void visit(Empty e){
-        e.accept(this);
-    }
-
-    public abstract void visit(Player p);
-    public abstract void visit(Enemy e);
-    public void visit(Wall w){};
 
 
-    public void combat(Units unit) {
-        int rollAttacker = new Random().nextInt(0, this.attackPoints);
-        int rollDefender = new Random().nextInt(0, unit.getDefense());
-        if ((rollAttacker - rollDefender)>0){
-            unit.setHealth(unit.getHealth()- (rollAttacker-rollDefender));
-            if (unit.getHealth() <= 0){
-                unit.victory(this);
-            }
-        }
+    public void setPosition(Position newPos){
+        super.setPosition(newPos);
+        this.position = newPos;
     }
 
     public abstract void victory(Units unit);
@@ -111,20 +85,20 @@ public abstract class Units extends Tile {
 
 
     public Position moveLeft(){
-        return new Position(new int[]{this.position.getPosition()[0] - 1, this.position.getPosition()[1]});
+        return new Position(new int[]{this.position.getPosition()[0] , this.position.getPosition()[1]-1});
 
     }
 
     public Position moveUp(){
-        return new Position(new int[]{this.position.getPosition()[0] , this.position.getPosition()[1] -1});
+        return new Position(new int[]{this.position.getPosition()[0]-1 , this.position.getPosition()[1]});
     }
 
     public Position moveDown(){
-        return new Position(new int[]{this.position.getPosition()[0], this.position.getPosition()[1]+1});
+        return new Position(new int[]{this.position.getPosition()[0]+1, this.position.getPosition()[1]});
     }
 
     public Position moveRight(){
-        return new Position(new int[]{this.position.getPosition()[0] + 1, this.position.getPosition()[1]});
+        return new Position(new int[]{this.position.getPosition()[0] , this.position.getPosition()[1]+1});
 
     }
     public Position doNothing(){

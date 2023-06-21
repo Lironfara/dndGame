@@ -2,7 +2,6 @@ package Game.GameView.BoardPackaeg;
 
 import Game.GameView.Units.Enemys.Enemy;
 import Game.GameView.Units.Players.Player;
-import Game.GameView.Units.Units;
 
 public abstract class Tile implements Comparable<Tile> {
     protected char tile;
@@ -24,9 +23,6 @@ public abstract class Tile implements Comparable<Tile> {
         return position;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
-    }
 
     public abstract void visit(Enemy enemy);
 
@@ -34,11 +30,14 @@ public abstract class Tile implements Comparable<Tile> {
 
     public abstract void visit(Empty empty);
 
-    public abstract void visit(Wall wall);
 
     public abstract void visit(Tile tile);
-    public abstract void accept(Empty empty);
+
     public abstract void accept(Wall wall);
+
+    public void setTile(char newTile){
+        this.tile = newTile;
+    }
 
     public abstract void accept(Enemy enemy);
     public abstract void accept(Player player);
@@ -55,9 +54,8 @@ public abstract class Tile implements Comparable<Tile> {
         return 0;
     }
 
-    @Override
-    public String toString() {
-        return String.valueOf(tile);
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
 }

@@ -1,11 +1,15 @@
 package Game.GameView.Units.Players;
 
 import Game.GameView.BoardPackaeg.*;
+import Game.GameView.CLI;
+import Game.GameView.MessageCallback;
 import Game.GameView.Units.Enemys.Enemy;
 import Game.GameView.Units.Units;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class Mage extends Player {
     protected int manaPool;
@@ -17,6 +21,8 @@ public class Mage extends Player {
 
     protected String specialAbilityName;
 
+    private MessageCallback messageCallback;
+
     public Mage( String name, int health, int attackPoints, int defensePoints, int manaPool, int manaCost, int spellPower, int hitsCount, int abilityRange){
         super('@', name,health,attackPoints,defensePoints);
         this.manaPool= manaPool;
@@ -26,6 +32,7 @@ public class Mage extends Player {
         this.hitsCount =hitsCount;
         this.abilityRange= abilityRange;
         this.specialAbilityName = "Blizzard";
+        this.messageCallback = new CLI();
 
     }
 
@@ -38,42 +45,55 @@ public class Mage extends Player {
     }
 
 
-    public void gameTick(){
+    public void interact(Tile tile){
+        this.accept(tile);
         setCurrentMana(manaPool+playerLevel);
+
     }
 
     @Override
-    public void abilityCast() {
-        if (currentMana < manaCost) {
+    public List<Enemy> abilityCast(List<Enemy> enemiesOnBoard) {
+        List<Enemy> enemiesToRemove = new ArrayList<>();
+        if (currentMana > manaCost) {
             setCurrentMana(currentMana - manaCost);
             int hits = 0;
-            ArrayList<Enemy> enemiesOnBoard = new ArrayList<>();
             ArrayList<Enemy> enemiesOnRange = new ArrayList<>();
             for (Enemy enemy : enemiesOnBoard) {
-                if (new Range(this.getPosition().getPosition(), enemy.getPosition().getPosition()).getRange() < abilityRange) {
+                if (new Range(this.getPosition().getPosition(), enemy.getPosition().getPosition()).getRange() < abilityRange && !enemy.isDead()) {
                     enemiesOnRange.add(enemy);
                 }
             }
-            while (hits < hitsCount && enemiesOnRange != null) {
+            while (hits < hitsCount && enemiesOnRange.size()>0) {
                 Collections.shuffle(enemiesOnRange);
                 Enemy toAttack = enemiesOnRange.get(0);
-                toAttack.setHealth(toAttack.getHealth() - spellPower);
-                if (toAttack.getHealth() <= 0) {
-                    this.setExperience(toAttack.getExperienceValue() + experience);
-                    toAttack.onDeath();
-                    abilityCastMessage(name + " cast " + specialAbilityName + ",  and killed " + toAttack.getName() + "."
-                            + name + " gained another " + toAttack.getExperienceValue() + " experience points");
-                    enemiesOnRange.remove(toAttack);
-                } else {
-                    abilityCastMessage(name + " cast " + specialAbilityName + "and damaged " + toAttack.getName());
+                int playerAttacker = new Random().nextInt(0, this.attackPoints);
+                int rollDefender = new Random().nextInt(0,toAttack.getDefense());
+                if (playerAttacker-rollDefender >0){
+                    toAttack.setHealth(toAttack.getHealth() - spellPower);
+                    if (toAttack.getHealth() <= 0) {
+                        this.setExperience(toAttack.getExperienceValue() + experience);
+                        toAttack.onDeath();
+                        enemiesToRemove.add(toAttack);
+                        enemiesOnRange.remove(toAttack);
+                        super.setPosition(toAttack.getPosition());
+                        this.setPosition(toAttack.getPosition());
+                        messageCallback.abilityCast(name + " cast " + specialAbilityName + ",  and killed " + toAttack.getName() + "."
+                                + name + " gained another " + toAttack.getExperienceValue() + " experience points");
+                        enemiesOnRange.remove(toAttack);
+                    }
+                    else{
+                        messageCallback.abilityCast(name + " cast " + specialAbilityName + "and damaged " + toAttack.getName());
+
+                    }
                 }
                 hits++;
             }
-            // what is enemy tries to defend itself
         }
         else{
-            abilityCastMessage(name + "tried to case " + specialAbilityName + " but not enough sources");
+            messageCallback.abilityCast(this.getName() + " try to cast "+ specialAbilityName + " but had not enough resources");
         }
+        return enemiesToRemove;
+
     }
 
 
@@ -81,9 +101,6 @@ public class Mage extends Player {
         if(newCurrentMana>manaPool)
             currentMana = manaPool;
 
-        else if (newCurrentMana<0){
-            //throw new exception not enough current
-        }
         else{
             currentMana = newCurrentMana;
         }
@@ -94,13 +111,21 @@ public class Mage extends Player {
 
     @Override
     public void visit(Empty e) {
-        super.visit(e);
+
     }
 
     @Override
     public void visit(Tile tile) {
 
     }
+
+    @Override
+    public void accept(Wall wall) {
+
+    }
+
+
+    public void accept(Empty empty) {}
 
     @Override
     public void visit(Wall w) {

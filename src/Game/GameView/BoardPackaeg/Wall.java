@@ -11,17 +11,23 @@ public class Wall extends Tile {
         this.initialize(position);
     }
 
-    public void visit(Player player){}
+    public void visit(Player player){
+
+    }
 
 
-    public void visit(Enemy enemy){}
+    public void visit(Enemy enemy){
+
+    }
 
     @Override
-    public void visit(Empty empty) {}
+    public void visit(Empty empty) {
+
+    }
 
 
 
-    @Override
+
     public void visit(Wall wall) {}
 
     @Override
@@ -32,7 +38,6 @@ public class Wall extends Tile {
     public void accept(Units unit) {}
 
 
-    @Override
     public void accept(Empty empty) {
         empty.visit(this);
     }
@@ -44,7 +49,6 @@ public class Wall extends Tile {
 
     @Override
     public void accept(Enemy enemy) {
-        enemy.visit(this);
     }
 
     @Override
