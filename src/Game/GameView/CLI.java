@@ -38,8 +38,8 @@ public class CLI implements MessageCallback   {
             return message;
         }
 
-        public String levelUp(String name, int nextLevel){
-            String message = name + " leveled up to level " + nextLevel+ "! Whoray! :D";
+        public String levelUp(String s){
+            String message = s+ " Whoray! :D";
             System.out.println(message);
             return message;
         }
@@ -82,7 +82,7 @@ public class CLI implements MessageCallback   {
 
     @Override
     public void describe(String s) {
-
+        System.out.println(s);
     }
 
     public String readerInput(){

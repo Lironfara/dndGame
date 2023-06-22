@@ -40,7 +40,7 @@ public class Trap extends Enemy{
             tickCount++;
         }
         if (new Range(player.position.getPosition(), this.position.getPosition()).getRange()<2){
-            combat(player);
+            return combat(player);
         }
         if (visible){
             super.setTile(trapTile);
@@ -53,22 +53,6 @@ public class Trap extends Enemy{
         return this.position;
     }
 
-
-
-    public void combat(Units unit) {
-        int rollAttacker = new Random().nextInt(0, this.attackPoints);
-        int rollDefender = new Random().nextInt(0, unit.getDefense());
-        CLI.combat(this.Name + " rolled "+ rollAttacker + " attack points");
-        CLI.combat(this.Name + " rolled "+ rollAttacker + " attack points");
-        if ((rollAttacker - rollDefender)>0){
-            unit.setHealth(unit.getHealth()- (rollAttacker-rollDefender));
-            CLI.combat(this.Name+" dealt "+ (rollAttacker-rollDefender)+" damage to "+unit.getName());
-            if (unit.getHealth() <= 0){
-                unit.victory(this);
-            }
-        }
-
-    }
 
 
     @Override

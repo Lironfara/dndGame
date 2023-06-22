@@ -14,6 +14,7 @@ public class Monster extends Enemy {
 
     protected MessageCallback CLI;
 
+
     private ArrayList<Character> randomMovments;
     public Monster(char c, String name, int health, int attackPoints, int defensePoints, int experienceValue, int visionRange) {
         super(c,name, health, attackPoints, defensePoints, experienceValue);
@@ -72,10 +73,10 @@ public class Monster extends Enemy {
     // to check movements
     public Position gameTick(Player player){
         if (new Range(this.position.getPosition(), player.position.getPosition()).getRange()< visionRange){
-            int dx = this.position.getPosition()[0]- player.position.getPosition()[0];
-            int dy = this.position.getPosition()[1]- player.position.getPosition()[1];
+            int dx = this.position.getPosition()[1]- player.position.getPosition()[1];
+            int dy = this.position.getPosition()[0]- player.position.getPosition()[0];
             if (Math.abs(dx) > Math.abs(dy)){
-                if (Math.abs(dx) > 0){
+                if (dx > 0){
                     return moveLeft(); //To check to new position is valid
                 }
                 else {
@@ -84,7 +85,7 @@ public class Monster extends Enemy {
 
             }
             else{
-                if (Math.abs(dy)>0){
+                if (dy>0){
                     return moveUp();
                 }
                 else {
@@ -98,10 +99,5 @@ public class Monster extends Enemy {
         }
 
     }
-
-    public void combat(){
-
-    }
-
 
 }

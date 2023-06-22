@@ -4,6 +4,7 @@ import Game.GameView.BoardPackaeg.*;
 import Game.GameView.MessageCallback;
 import Game.GameView.CLI;
 import Game.GameView.Units.Enemys.Enemy;
+import Game.GameView.Units.Health;
 import Game.GameView.Units.Units;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public abstract class Player extends Units {
 
     public Position position;
     private boolean dead;
+    private Health health;
 
     public Player(char c, String name, int health, int attackPoints, int defensePoints){
         super('@', name,health, attackPoints, defensePoints);
@@ -24,6 +26,7 @@ public abstract class Player extends Units {
         this.playerLevel=1;
         dead = false;
         this.messageCallBack = new CLI();
+        this.health = new Health(health, health);
     }
 
     public boolean isDead(){
@@ -38,7 +41,14 @@ public abstract class Player extends Units {
 
     @Override
     public void visit(Enemy enemy) {
+        combat(enemy);
+    }
 
+    public int getHealthPool(){
+        return health.getHealthPool();
+    }
+    public int getHealthAmount(){
+        return health.getHealthAmount();
     }
 
     public void levelUp(){
@@ -48,7 +58,6 @@ public abstract class Player extends Units {
         this.health.setHealthAmount(health.getHealthPool());
         this.attackPoints =attackPoints+ 4*playerLevel;
         this.defensePoints =defensePoints+ playerLevel;
-        messageCallBack.levelUp(this.name, this.playerLevel);
     }
 
     public Position gameTick(String movment){
@@ -56,8 +65,6 @@ public abstract class Player extends Units {
         if (experience >= 50*playerLevel){
             levelUp();
         }
-
-
         return newPosition;
     }
 
@@ -83,7 +90,7 @@ public abstract class Player extends Units {
     public void onDeath(){
 
         this.tile = 'X';
-        messageCallBack.onDeath(this.Name);
+        messageCallBack.onDeath("You died! Game over!");
     };
 
     public void setPosition(Position newPos){
@@ -94,23 +101,38 @@ public abstract class Player extends Units {
     public void accept(Player player) {
 
     }
-    public  void accept(Enemy enemy) {
 
-        combat(enemy);
+    public Position combat(Enemy enemy) {
+        int rollAttacker = new Random().nextInt(0, this.attack);
+        int rollDefender = new Random().nextInt(0, getDefense());
+        messageCallBack.combat(enemy.getName() + " rolled "+ rollAttacker + " attack points");
+        messageCallBack.combat(this.getName() + " rolled "+ rollDefender + " defense points");
+        if ((rollAttacker - rollDefender)>0){
+            setHealth(enemy.getHealth()- (rollAttacker-rollDefender));
+            if (getHealth() <=0){
+                onDeath();
+                setPosition(enemy.getPosition());
+            }
+            messageCallBack.combat(enemy.getName()+" dealt "+ (rollAttacker-rollDefender)+" damage to "+this.getName());
+            if (enemy.getHealth() <= 0){
+                enemy.victory(this);
+            }
+        }
+        else{
+            messageCallBack.combat(getName()+" dealt "+ 0+" damage to "+this.getName());
+
+        }
+        return getPosition();
+
     }
 
 
-    public void combat(Enemy enemy){
-        int playerAttacker = new Random().nextInt(0, this.attackPoints);
-        int rollDefender = new Random().nextInt(0, enemy.getDefense());
-        if (playerAttacker - rollDefender > 0) {
-            this.experience = this.experience + enemy.getExperienceValue();
-            enemy.remove();
-            super.setPosition(enemy.getPosition());
-            setPosition(enemy.getPosition());
-        }
+    public  void accept(Enemy enemy) {
+        enemy.visit(this);
+    }
 
-
+    public void setExperinse(int newEx){
+        this.experience = newEx;
     }
 
     public void victory(Units unit){
@@ -121,8 +143,10 @@ public abstract class Player extends Units {
         setExperience(this.experience+enemy.getExperienceValue());
         enemy.remove();
         this.setPosition(enemy.getPosition());
-        messageCallBack.combatResult(this.name + " won the combat agains "+ enemy.getName() + " and gained " +enemy.getExperienceValue() +" experince points");
+        messageCallBack.combat(this.name + " won the combat agains "+ enemy.getName() + " and gained " +enemy.getExperienceValue() +" experince points");
     }
+
+
 
     public void victory(Player player){}
     public void setExperience(int newex){

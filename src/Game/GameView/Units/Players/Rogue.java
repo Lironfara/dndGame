@@ -38,8 +38,22 @@ public class Rogue extends Player{
         super.levelUp();
         this.currentEnergy=100;
         this.attackPoints = attackPoints+(3*playerLevel);
+        messageCallback.levelUp(this.name + " reached level "+ playerLevel+ ":" + "+"+ 3*playerLevel+ " Attack points");
 
     }
+
+    public Position gameTick(String movement){
+        setCurrentEnergy(currentEnergy+10);
+        messageCallback.describe(describe());
+        return super.gameTick(movement);
+    }
+
+    public String describe(){
+        String s = getName() + "   Health :"+ getHealthPool()+"/"+getHealthAmount() + "   Attack :"+getAttack() + "   Defense :"+getDefense()+ "   Experience : "+getExperience() + "   Current Energy : "+currentEnergy+"/"+cost;
+        return s;
+
+    }
+
 
     @Override
     public List<Enemy> abilityCast(List<Enemy> enemiesOnBoard){

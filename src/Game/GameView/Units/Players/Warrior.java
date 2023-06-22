@@ -4,6 +4,7 @@ import Game.GameView.BoardPackaeg.*;
 import Game.GameView.CLI;
 import Game.GameView.MessageCallback;
 import Game.GameView.Units.Enemys.Enemy;
+import Game.GameView.Units.Health;
 import Game.GameView.Units.Units;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class Warrior extends Player{
 
     private String specialAbilityName;
     private MessageCallback messageCallback;
+    private Health health;
 
 
     public Warrior(String name, int health, int attackPoints, int defensePoints, int abilityCoolDown){
@@ -24,6 +26,7 @@ public class Warrior extends Player{
         this.remainingCoolDown = 0;
         this.specialAbilityName = "Avenger's Shield";
         messageCallback = new CLI();
+        this.health = new Health(health,health);
     }
 
     public void onDeath(){
@@ -74,11 +77,25 @@ public class Warrior extends Player{
         health.setHealthPool(health.getHealthPool()+(5*playerLevel));
         attackPoints = attackPoints+(2*playerLevel);
         defensePoints = defensePoints+(playerLevel);
+        messageCallback.levelUp(this.name + " reached level "+ playerLevel+ ":" + "+"+ 5*playerLevel+ " Health"
+                +", +"+ 2*playerLevel+ " Attack points " + ", +"+ playerLevel+ " defense points");
 
     }
 
+    public void setRemainingCoolDown(int newCurr){
+        if (newCurr>=0){
+            this.remainingCoolDown = newCurr;
+        }
+    }
+
+    public Position gameTick(String movement){
+        setRemainingCoolDown(this.remainingCoolDown-1);
+        messageCallback.describe(describe());
+        return super.gameTick(movement);
+    }
+
     public String describe(){
-        String s = String.format("%s\t\tHealth: %s\t\tAttack: %d\t\tDefense: %s\t\texperience:%s","%s\t\tCool down:%s" , getName(), getHealth(), getAttack(), getDefense(), getExperience(), getAttackPoints(), remainingCoolDown,"/", abilityCoolDown);
+        String s = getName() + "   Health :"+ getHealthPool()+"/"+getHealthAmount() + "Attack :"+getAttack() + "   Defense :"+getDefense()+ "   Experience: "+getExperience() + "   Cool down : "+abilityCoolDown+"/"+remainingCoolDown;
         return s;
 
     }
@@ -107,7 +124,7 @@ public class Warrior extends Player{
 
 
     public void accept(Enemy enemy) {
-        combat(enemy);
+       enemy.visit(this);
     }
 
     @Override

@@ -8,14 +8,13 @@ import Game.GameView.Units.Enemys.Enemy;
 import Game.GameView.Units.Players.Player;
 
 public abstract class Units extends Tile {
-    protected String Name;
+    protected String name;
     protected Health health;
     protected int attackPoints;
     protected int defensePoints;
 
 
     protected char tile;
-    protected String name;
     protected Health healthState;
     protected int attack;
     protected int defense;
@@ -60,7 +59,7 @@ public abstract class Units extends Tile {
     public int getHealth(){
         return healthState.healthAmount;
     };
-    public void setHealth(int i) {this.health.setHealthAmount(i);}
+    public void setHealth(int i) {healthState.setHealthAmount(i);}
 
     public int getAttack(){
         return attack;

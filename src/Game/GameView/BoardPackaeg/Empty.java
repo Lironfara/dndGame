@@ -27,7 +27,6 @@ public class Empty extends Tile {
         this.position = position;
     }
 
-    @Override
     public void visit(Enemy enemy) {
         Position temp = enemy.getPosition();
         enemy.setPosition(this.position);

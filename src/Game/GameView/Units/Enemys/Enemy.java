@@ -2,6 +2,8 @@ package Game.GameView.Units.Enemys;
 
 import Game.GameView.BoardPackaeg.Position;
 import Game.GameView.BoardPackaeg.Tile;
+import Game.GameView.CLI;
+import Game.GameView.MessageCallback;
 import Game.GameView.Units.Players.Player;
 import Game.GameView.Units.Units;
 import Game.GameView.Units.Health;
@@ -9,6 +11,7 @@ import Game.GameView.Units.Health;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public abstract class Enemy extends Units {
 
@@ -17,15 +20,17 @@ public abstract class Enemy extends Units {
     protected boolean isDead;
 
     protected List<Character> randomMovments;
+    protected MessageCallback messageCallback;
 
-    public Enemy(char tile, String name, int healthState, int attackPoints, int defensePoints, int experienceValue){
-        super(tile, name, healthState, attackPoints, defensePoints);
+    public Enemy(char tile, String name, int healthState, int attack, int defensePoints, int experienceValue){
+        super(tile, name, healthState, attack, defensePoints);
         this.experienceValue = experienceValue;
         this.randomMovments = new ArrayList<>();
         randomMovments.add(0, 'w');
         randomMovments.add(1, 's');
         randomMovments.add(2, 'a');
         randomMovments.add(3, 'd');
+        this.messageCallback = new CLI();
     }
 
 
@@ -51,11 +56,32 @@ public abstract class Enemy extends Units {
     public void accept(Enemy enemy){
     }
 
+    public void visit(Player player){
+        combat(player);
+    }
 
 
-    @Override
-    public void visit(Player p) {
+    public Position combat(Player player) {
+        int rollAttacker = new Random().nextInt(0, this.attack);
+        int rollDefender = new Random().nextInt(0, getDefense());
+        messageCallback.combat(player.getName() + " rolled "+ rollAttacker + " attack points");
+        messageCallback.combat(this.getName() + " rolled "+ rollDefender + " defense points");
+        if ((rollAttacker - rollDefender)>0){
+            setHealth(player.getHealth()- (rollAttacker-rollDefender));
+            if (getHealth() <=0){
+                messageCallback.combat(name + " died."+ player.getName()+" gained "+ this.experienceValue + " experience ");
+                return this.position;
+            }
+            messageCallback.combat(player.getName()+" dealt "+ (rollAttacker-rollDefender)+" damage to "+this.getName());
+            if (player.getHealth() <= 0){
+                player.victory(this);
+            }
+        }
+        else{
+            messageCallback.combat(player.getName()+" dealt "+ 0+" damage to "+this.getName());
 
+        }
+        return player.getPosition();
 
     }
 
