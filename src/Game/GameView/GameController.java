@@ -51,7 +51,7 @@ public class GameController {
         cli.gameStartOutPut();
         String dx = cli.readerInput();
 
-        while (dx.compareTo("1")>1 && dx.compareTo("6")>0){
+        while (dx.compareTo("0") > 0 && dx.compareTo("6")>0){
             cli.gameStartOutPut();
            dx = cli.readerInput();
         }
@@ -63,7 +63,7 @@ public class GameController {
 
                if (line.charAt(width)=='@'){
                    Position playerPosition = position;
-                   player= tileFactory.producePlayer(Integer.parseInt(dx), playerPosition);
+                   player= tileFactory.producePlayer(Integer.parseInt(dx)-1, playerPosition);
                    cli.choosePlayerSelection("You have selected:\n " + player.getName());
                }
            }

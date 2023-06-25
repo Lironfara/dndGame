@@ -148,7 +148,7 @@ public class Mage extends Player {
 
     @Override
     public String describe(){
-        String s= super.describe() + "Mana: " + currentMana + "/" + manaPool + " | Spell Power: " + spellPower + " | Mana Cost: " + manaCost + "/n";
+        String s= super.describe() + "Mana: " + currentMana + "/" + manaPool + " | Spell Power: " + spellPower + " | Mana Cost: " + manaCost + "\n";
 
         return s;
     }

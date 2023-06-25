@@ -182,6 +182,6 @@ public abstract class Player extends Units {
     }
     public String describe(){
 
-        return "Player: " + this.name + " Health: " + this.health.getHealthAmount() + "/" + this.health.getHealthPool() + " Attack: " + this.attack + " Defense: " + this.defense + " Level: " + this.playerLevel + " Experience: " + this.experience + "/"+ 50*playerLevel + "\n";
+        return "Player: " + this.name + "\n"+ "Health: " + this.health.getHealthAmount() + "/" + this.health.getHealthPool() + " Attack: " + this.attack + " Defense: " + this.defense + " Level: " + this.playerLevel + " Experience: " + this.experience + "/"+ 50*playerLevel + "\n";
     }
 }

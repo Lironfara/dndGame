@@ -117,7 +117,7 @@ public class Rogue extends Player{
 
     @Override
     public String describe(){
-        String s = super.describe() + " , Energy: " + currentEnergy + "/" + 100 + "/n";
+        String s = super.describe() + " , Energy: " + currentEnergy + "/" + 100 + "\n";
         return s;
     }
     public void accept(Units unit, Position newPosition) {

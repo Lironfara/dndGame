@@ -80,7 +80,7 @@ public class Warrior extends Player{
     @Override
     public String describe(){
 
-        String s = super.describe()+  " Cooldown: "+ abilityCoolDown + "/n";
+        String s = super.describe()+  " Cooldown: "+ abilityCoolDown + "\n";
 
         return s;
 
