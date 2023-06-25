@@ -48,7 +48,7 @@ public abstract class Player extends Units {
         this.health.setHealthAmount(health.getHealthPool());
         this.attack =attack+ 4*playerLevel;
         this.defense =defense+ playerLevel;
-        messageCallBack.levelUp(this.name, this.playerLevel);
+        messageCallBack.levelUp(this.name + "leveled up to" +  this.playerLevel);
     }
 
     public Position gameTick(String movment){

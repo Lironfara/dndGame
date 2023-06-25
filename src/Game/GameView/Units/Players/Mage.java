@@ -59,10 +59,6 @@ public class Mage extends Player {
         return super.gameTick(movement);
     }
 
-    public String describe(){
-        String s = getName() + "   Health :"+ getHealthPool()+"/"+getHealthAmount()+ "   Attack :"+getAttack() + "   Defense :"+getDefense()+ "   Experience : "+getExperience() + "   Mana : "+currentMana+"/"+manaPool+ "  Mana Cost: " +manaCost;
-        return s;
-    }
 
     @Override
     public List<Enemy> abilityCast(List<Enemy> enemiesOnBoard) {

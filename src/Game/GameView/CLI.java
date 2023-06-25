@@ -26,6 +26,12 @@ public class CLI implements MessageCallback   {
         System.out.println(s);
     }
 
+    @Override
+    public String levelUp(String s) {
+        System.out.println(s);
+        return s;
+    }
+
 
     public String combatResult(String message) {
             System.out.println(message);
