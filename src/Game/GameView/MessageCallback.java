@@ -8,7 +8,7 @@ public interface MessageCallback {
      void abilityCast(String s);
      String onDeath(String name);
      void combat(String s);
-     String levelUp(String name, int newLevel);
+     String levelUp(String s);
 
      String gameTickDesc(String s);
 

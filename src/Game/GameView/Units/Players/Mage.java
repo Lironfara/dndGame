@@ -42,6 +42,8 @@ public class Mage extends Player {
         manaPool= manaPool+ 25*playerLevel;
         setCurrentMana(currentMana+ manaPool/4);
         spellPower= spellPower+ 10*playerLevel;
+        messageCallback.levelUp(this.name + " reached level "+ playerLevel+ ":" + "+"+ 25*playerLevel+ " Mana pool"
+        +", +"+ manaPool/4+ "Mana " + ", +"+ 10*playerLevel+ " sepll power");
     }
 
 
@@ -49,6 +51,17 @@ public class Mage extends Player {
         this.accept(tile);
         setCurrentMana(manaPool+playerLevel);
 
+    }
+
+    public Position gameTick(String movement){
+        setCurrentMana(currentMana+1*playerLevel);
+        messageCallback.describe(describe());
+        return super.gameTick(movement);
+    }
+
+    public String describe(){
+        String s = getName() + "   Health :"+ getHealthPool()+"/"+getHealthAmount()+ "   Attack :"+getAttack() + "   Defense :"+getDefense()+ "   Experience : "+getExperience() + "   Mana : "+currentMana+"/"+manaPool+ "  Mana Cost: " +manaCost;
+        return s;
     }
 
     @Override
