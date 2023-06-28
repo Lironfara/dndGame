@@ -35,7 +35,6 @@ public class Mage extends Player {
         this.messageCallback = new CLI();
 
     }
-
     @Override
     public void levelUp(){
         super.levelUp();
@@ -45,21 +44,15 @@ public class Mage extends Player {
         messageCallback.levelUp(this.name + " reached level "+ playerLevel+ ":" + "+"+ 25*playerLevel+ " Mana pool"
         +", +"+ manaPool/4+ "Mana " + ", +"+ 10*playerLevel+ " sepll power");
     }
-
-
     public void interact(Tile tile){
         this.accept(tile);
         setCurrentMana(manaPool+playerLevel);
-
     }
-
     public Position gameTick(String movement){
         setCurrentMana(currentMana+1*playerLevel);
         messageCallback.describe(describe());
         return super.gameTick(movement);
     }
-
-
     @Override
     public List<Enemy> abilityCast(List<Enemy> enemiesOnBoard) {
         List<Enemy> enemiesToRemove = new ArrayList<>();
@@ -104,56 +97,26 @@ public class Mage extends Player {
         return enemiesToRemove;
 
     }
-
-
     private void setCurrentMana(int newCurrentMana){
         if(newCurrentMana>manaPool)
             currentMana = manaPool;
-
         else{
             currentMana = newCurrentMana;
         }
-
     }
-
-
-
-    @Override
-    public void visit(Empty e) {
-
-    }
-
     @Override
     public void visit(Tile tile) {
-
     }
-
     @Override
     public void accept(Wall wall) {
-
     }
-
-
     public void accept(Empty empty) {}
-
-    @Override
-    public void visit(Wall w) {
-        super.visit(w);
-    }
-
-    @Override
-    public Position getPosition() {
-        return super.getPosition();
-    }
 
     @Override
     public String describe(){
         String s= super.describe() + "Mana: " + currentMana + "/" + manaPool + " | Spell Power: " + spellPower + " | Mana Cost: " + manaCost + "\n";
-
         return s;
     }
-
-
     public void accept(Units unit, Position newPosition) {
         unit.accept(this);
     }

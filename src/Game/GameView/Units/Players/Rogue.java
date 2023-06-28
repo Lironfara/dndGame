@@ -13,26 +13,20 @@ import java.util.Random;
 public class Rogue extends Player{
     int cost;
     int currentEnergy;
-
     protected String abilityCastName;
     private MessageCallback messageCallback;
-
     public Rogue(String name, int health, int attackPoints, int defensePoints, int cost){
         super('@', name,health,attackPoints,defensePoints);
         this.cost = cost;
         this.currentEnergy = 100;
         this.abilityCastName = "Fan of knives";
         this.messageCallback = new CLI();
-
     }
-
-
     public void interact(Tile tile) {
         this.accept(tile);
         setCurrentEnergy(currentEnergy+10);
 
     }
-
     @Override
     public void levelUp() {
         super.levelUp();
@@ -40,7 +34,6 @@ public class Rogue extends Player{
         this.attack = attack+(3*playerLevel);
 
     }
-
     @Override
     public List<Enemy> abilityCast(List<Enemy> enemiesOnBoard){
         List<Enemy> enemiesToRemove = new ArrayList<>();
@@ -76,8 +69,6 @@ public class Rogue extends Player{
     }
         return enemiesToRemove;
     }
-
-
     private void setCurrentEnergy(int newCurrentEnergy){
         if (newCurrentEnergy > 100){
             currentEnergy = 100;
@@ -86,35 +77,12 @@ public class Rogue extends Player{
             currentEnergy= newCurrentEnergy;
         }
     }
-
-    @Override
-    public void visit(Empty e) {
-
-
-    }
-
-
     @Override
     public void visit(Tile tile) {
-
     }
-
     @Override
     public void accept(Wall wall) {
-
     }
-
-
-    @Override
-    public void visit(Wall w) {
-        super.visit(w);
-    }
-
-    @Override
-    public Position getPosition() {
-        return super.getPosition();
-    }
-
     @Override
     public String describe(){
         String s = super.describe() + " , Energy: " + currentEnergy + "/" + 100 + "\n";

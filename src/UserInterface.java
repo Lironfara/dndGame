@@ -6,14 +6,9 @@ import java.io.File;
 public class UserInterface {
     private CLI CLI;
     private GameController gameController;
-
     private File file;
-
     public UserInterface() {
-
     }
-
-
     public static void main(String[] args) {
        GameController gameController = new GameController();
        String path = "C:\\Users\\Yuval\\Desktop\\levels_dir\\levels_dir";

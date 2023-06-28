@@ -10,15 +10,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
-
 public class GameController {
-
     private CLI cli;
     public GameController(){
-
         this.cli = new CLI();
     }
-
     public List<List<String>> loadLevel(File file){
         File[] files = file.listFiles();
         List<List<String>> levels = new ArrayList<>();
@@ -40,18 +36,15 @@ public class GameController {
                     }
                     levels.add(lines);
                 }
-
             }
         }
         return levels;
     }
-
     public Player choosePlayer(List<List<String>> cuurentLevel){
         Player player = null;
         cli.gameStartOutPut();
         String dx = cli.readerInput();
-
-        while (dx.compareTo("0") > 0 && dx.compareTo("6")>0){
+        while (dx.compareTo("0") > 0 && dx.compareTo("7")>0){
             cli.gameStartOutPut();
            dx = cli.readerInput();
         }
@@ -67,12 +60,9 @@ public class GameController {
                    cli.choosePlayerSelection("You have selected:\n " + player.getName());
                }
            }
-
         }
         return player;
     }
-
-
     public Player startGame(List<List<String>> levels) {
         int currentLevel = 1;
         List<List<String>> currentLevelMap = Collections.singletonList(levels.get(currentLevel - 1));
@@ -85,7 +75,6 @@ public class GameController {
                 board.abilityCast(player);
                 cli.printBoard(board.gameTick(player, "q"));
             }
-
             else{
                 cli.printBoard(board.gameTick(player,movment));
                 if (board.getNumberOfEnemies()==0){
@@ -95,9 +84,7 @@ public class GameController {
                     cli.printBoard(board.printBoard());
                 }
             }
-
         }
         return player;
     }
-
 }

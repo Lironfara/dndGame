@@ -50,7 +50,6 @@ public class Board {
         }
         this.enemiesList = getEnemies();
     }
-
     public void gameTick(String movement){
         Position p = player.gameTick(movement);
         player.interact(map[p.getPosition()[0]][p.getPosition()[1]]);
@@ -61,14 +60,12 @@ public class Board {
 
         }
     }
-
     public void abilityCast(Player player){
         List<Enemy> enemiesToRemove =  player.abilityCast(getEnemies());
         for (Enemy enemy: enemiesToRemove) {
             removeEnemyFromBoard(enemy);
         }
     }
-
     public String gameTick(Player player, String movement){
         Position prevPosition = player.getPosition();
         Position newPlayerPosition = player.gameTick(movement);
@@ -81,7 +78,6 @@ public class Board {
             map[player.position.getPosition()[0]][player.position.getPosition()[1]] = player;
             map[prevPosition.getPosition()[0]][prevPosition.getPosition()[1]] = tileToStepInto;
         }
-
 
         for (Enemy enemy: enemiesList) {
             if (!enemy.isDead()){
@@ -104,23 +100,15 @@ public class Board {
         }
         return player.describe()+printBoard();
     }
-
-
     public void removePlayerFromBoard(Player player){
         map[player.position.getPosition()[0]][player.position.getPosition()[1]] = tileFactory.onDeath(player.position);
     }
-
     public void removeEnemyFromBoard(Enemy enemy){
         map[enemy.position.getPosition()[0]][enemy.position.getPosition()[1]] = tileFactory.generate('.', enemy.getPosition());;
     }
-
     public boolean changedPosition(Position p1, Position p2){
         return p1.getPosition()[0]==p2.getPosition()[0] && p1.getPosition()[1]==p2.getPosition()[1];
-
     }
-
-
-
     public List<Enemy> getEnemies(){
         List<Enemy> enemies = new ArrayList<>();
         for (Tile[] tileline: map) {
@@ -133,17 +121,13 @@ public class Board {
         this.numberOfEnemies = enemies.size();
         return enemies;
     }
-
     public int getNumberOfEnemies(){
         return this.numberOfEnemies;
     }
-
-
     public Tile get(int x, int y)  {
         Tile tile = map[x][y];
         return tile;
     }
-
     public void replace(Tile tile1, Tile tile2) {
         Position pos= tile1.getPosition();
         Position pos2 = tile2.getPosition();
@@ -152,7 +136,6 @@ public class Board {
         map[pos2.getPosition()[0]][pos2.getPosition()[1]] = tile1;
         tile1.initialize(pos2);
     }
-
     public String printBoard() {
         String board = "";
         List<Tile> lines = new ArrayList<>();
@@ -169,7 +152,6 @@ public class Board {
                 }
             }
         }
-
         return board;
     }
 }

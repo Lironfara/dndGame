@@ -7,17 +7,13 @@ import Game.GameView.Units.Players.Player;
 import Game.GameView.Units.Units;
 
 import java.util.Random;
-
 public class Trap extends Enemy{
-
     protected int visibilityTime;
     protected int invisibilityTime;
     protected int tickCount;
     protected boolean visible;
     protected char trapTile;
     protected MessageCallback CLI;
-
-
     public Trap(char c, String name, int health, int attackPoints, int defensePoints, int experienceValue,
                 int visibilityTime, int invisibilityTime) {
         super(c,name, health, attackPoints, defensePoints, experienceValue);
@@ -25,11 +21,9 @@ public class Trap extends Enemy{
         this.invisibilityTime = invisibilityTime;
         this.tickCount=0;
         this.visible=true;
-
         this.trapTile = c;
         this.CLI = new CLI();
     }
-
     public Position gameTick(Player player){
         visible =tickCount<visibilityTime;
         if (tickCount==visibilityTime+invisibilityTime){
@@ -51,18 +45,8 @@ public class Trap extends Enemy{
         }
         return this.position;
     }
-
-
-
-
-
-
-
     @Override
-    public void victory(Enemy enemy) {
-
-    }
-
+    public void victory(Enemy enemy) {}
     @Override
     public char toChar() {
         if(visible)
@@ -70,24 +54,10 @@ public class Trap extends Enemy{
         else
             return '.';
     }
-
     @Override
-    public Position getPosition() {
-        return super.getPosition();
-    }
-
-
-    @Override public void visit(Empty e){
-
-    }
-
+    public void visit(Empty e){}
     @Override
-    public void visit(Tile tile) {
-
-    }
-
+    public void visit(Tile tile) {}
     @Override
     public void accept(Wall wall) {}
-
-
 }

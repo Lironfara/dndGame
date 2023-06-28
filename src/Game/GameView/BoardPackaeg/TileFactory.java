@@ -3,10 +3,7 @@ package Game.GameView.BoardPackaeg;
 import Game.GameView.Units.Enemys.Enemy;
 import Game.GameView.Units.Enemys.Monster;
 import Game.GameView.Units.Enemys.Trap;
-import Game.GameView.Units.Players.Mage;
-import Game.GameView.Units.Players.Player;
-import Game.GameView.Units.Players.Rogue;
-import Game.GameView.Units.Players.Warrior;
+import Game.GameView.Units.Players.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -54,8 +51,8 @@ public class TileFactory {
                 () -> new Mage("Melisandre", 100, 5, 1, 300, 30, 15, 5, 6),
                 () -> new Mage("Thoros of Myr", 250, 25, 4, 150, 20, 20, 3, 4),
                 () -> new Rogue("Arya Stark", 150, 40, 2, 20),
-                () -> new Rogue("Bronn", 250, 35, 3, 50)
-                //() -> new Hunter("Ygritte", 220, 30, 2, 6) //The bounous
+                () -> new Rogue("Bronn", 250, 35, 3, 50),
+                () -> new hunter("Ygritte", 220, 30, 2, 6)
         );
     }
 

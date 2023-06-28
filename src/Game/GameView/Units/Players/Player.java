@@ -12,12 +12,9 @@ import java.util.Random;
 public abstract class Player extends Units {
     protected int experience;
     protected int playerLevel;
-
     protected MessageCallback messageCallBack;
-
     public Position position;
     private boolean dead;
-
     public Player(char c, String name, int health, int attackPoints, int defensePoints){
         super('@', name,health, attackPoints, defensePoints);
         this.experience=0;
@@ -25,22 +22,15 @@ public abstract class Player extends Units {
         dead = false;
         this.messageCallBack = new CLI();
     }
-
     public boolean isDead(){
         return dead;
     }
-
-
-    //Imppossible sitiation
     @Override
     public void visit(Player p) {
     }
-
     @Override
     public void visit(Enemy enemy) {
-
     }
-
     public void levelUp(){
         this.experience= experience- 50*playerLevel;
         this.playerLevel++;
@@ -50,55 +40,35 @@ public abstract class Player extends Units {
         this.defense =defense+ playerLevel;
         messageCallBack.levelUp(this.name + "leveled up to" +  this.playerLevel);
     }
-
     public Position gameTick(String movment){
         Position newPosition =  move(movment);
         if (experience >= 50*playerLevel){
             levelUp();
         }
-
-
         return newPosition;
     }
-
     @Override
     public void initialize(Position position) {
         super.initialize(position);
         this.position = position;
     }
-
     public void interact(Tile tile) {
         this.accept(tile);
     };
-
-
-
     public void abilityCastMessage(String m){};
     public abstract List<Enemy> abilityCast(List<Enemy> enemyList);
-
     public int getExperience() {
         return experience;
     }
-
     public void onDeath(){
-
         this.tile = 'X';
         messageCallBack.onDeath(this.Name);
     };
-
-    public void setPosition(Position newPos){
-        super.setPosition(newPos);
-        this.position = newPos;
-    }
-
     public void accept(Player player) {
-
     }
     public  void accept(Enemy enemy) {
         combat(enemy);
     }
-
-
     public void combat(Enemy enemy){
         int playerAttacker = new Random().nextInt(0,getAttack());
         messageCallBack.combatResult(this.name + " rolled " + playerAttacker + " attack points");
@@ -118,11 +88,6 @@ public abstract class Player extends Units {
             messageCallBack.combatResult(this.name + " attacked " + enemy.getName() + " and damaged him by " + (playerAttacker - rollDefender) + " points");
         }
     }
-
-    public void victory(Units unit){
-        unit.victory(this);
-    }
-
     public void victory(Enemy enemy){
         setExperience(this.experience+enemy.getExperienceValue());
         enemy.remove();
@@ -140,29 +105,11 @@ public abstract class Player extends Units {
     }
 
     public abstract void visit(Tile tile);
-
-
     public void visit(Wall w) {
-        visit(w);
     }
-
     @Override
     public void visit(Empty e) {
     }
-
-    public String getName(){
-        return this.name;
-    }
-
-
-    @Override
-    public Position getPosition() {
-        return super.getPosition();
-    }
-
-
-
-
     public Position move (String movement){
         if (movement.equals("a")){
             return moveLeft();
@@ -181,7 +128,6 @@ public abstract class Player extends Units {
         }
     }
     public String describe(){
-
         return "Player: " + this.name + "\n"+ "Health: " + this.health.getHealthAmount() + "/" + this.health.getHealthPool() + " Attack: " + this.attack + " Defense: " + this.defense + " Level: " + this.playerLevel + " Experience: " + this.experience + "/"+ 50*playerLevel + "\n";
     }
 }

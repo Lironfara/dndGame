@@ -9,11 +9,8 @@ import Game.GameView.Units.Units;
 import java.util.*;
 
 public class Monster extends Enemy {
-
     private int visionRange;
-
     protected MessageCallback CLI;
-
     private ArrayList<Character> randomMovments;
     public Monster(char c, String name, int health, int attackPoints, int defensePoints, int experienceValue, int visionRange) {
         super(c,name, health, attackPoints, defensePoints, experienceValue);
@@ -29,47 +26,24 @@ public class Monster extends Enemy {
         randomMovments.add(3, 'd');
         return randomMovments;
     }
-
-    @Override
-    public char toChar() {
-        return super.toChar();
-    }
-
-    @Override
-    public Position getPosition() {
-        return super.getPosition();
-    }
-
     @Override
     public void visit(Empty empty) {
-
     }
-
     @Override
     public void visit(Tile tile) {
-
     }
-
     @Override
     public void accept(Wall wall) {
-
     }
-
     public void accept(Empty empty) {}
-
-
     public void accept(Units unit, Position newPosition) {
         unit.accept(this);
     }
-
     @Override
     public void victory(Enemy enemy) {}
     public void victory(Player player){
         player.onDeath();
     }
-
-
-    // to check movements
     public Position gameTick(Player player){
         if (new Range(this.position.getPosition(), player.position.getPosition()).getRange()< visionRange){
             int dx = this.position.getPosition()[0]- player.position.getPosition()[0];
@@ -96,10 +70,5 @@ public class Monster extends Enemy {
             Collections.shuffle(randomMovments);
             return moveRandomly(randomMovments.get(0));
         }
-
     }
-
-
-
-
 }
