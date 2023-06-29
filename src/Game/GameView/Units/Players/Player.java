@@ -109,6 +109,7 @@ public abstract class Player extends Units {
     }
     @Override
     public void visit(Empty e) {
+        e.visit(this);
     }
     public Position move (String movement){
         if (movement.equals("a")){
@@ -126,6 +127,10 @@ public abstract class Player extends Units {
         else{
             return doNothing();
         }
+    }
+    public void setPosition(Position newPos){
+        super.setPosition(newPos);
+        this.position = newPos;
     }
     public String describe(){
         return "Player: " + this.name + "\n"+ "Health: " + this.health.getHealthAmount() + "/" + this.health.getHealthPool() + " Attack: " + this.attack + " Defense: " + this.defense + " Level: " + this.playerLevel + " Experience: " + this.experience + "/"+ 50*playerLevel + "\n";

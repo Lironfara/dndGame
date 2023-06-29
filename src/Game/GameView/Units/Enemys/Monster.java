@@ -28,6 +28,11 @@ public class Monster extends Enemy {
     }
     @Override
     public void visit(Empty empty) {
+        Position temp = this.position;
+        this.position = empty.getPosition();
+        empty.setPosition(temp);
+        this.setTile(empty.getTile());
+        empty.setTile(empty.getTile());
     }
     @Override
     public void visit(Tile tile) {

@@ -1,5 +1,6 @@
 package Game.GameView.Units;
 
+import Game.GameView.BoardPackaeg.Empty;
 import Game.GameView.BoardPackaeg.Position;
 import Game.GameView.BoardPackaeg.Tile;
 import Game.GameView.MessageCallback;
@@ -54,6 +55,16 @@ public abstract class Units extends Tile {
     public abstract void victory(Enemy enemy);
     public Position moveLeft(){
         return new Position(new int[]{this.position.getPosition()[0] , this.position.getPosition()[1]-1});
+    }
+
+
+
+    public void visit(Empty e){
+        e.accept(this);
+    }
+
+    public Position getPosition(){
+        return this.position;
     }
     public Position moveUp(){
         return new Position(new int[]{this.position.getPosition()[0]-1 , this.position.getPosition()[1]});

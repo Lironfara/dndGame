@@ -44,7 +44,7 @@ public class GameController {
         Player player = null;
         cli.gameStartOutPut();
         String dx = cli.readerInput();
-        while (dx.compareTo("0") > 0 && dx.compareTo("7")>0){
+        while (dx.compareTo("1") > 0 && dx.compareTo("7")>0){
             cli.gameStartOutPut();
            dx = cli.readerInput();
         }
