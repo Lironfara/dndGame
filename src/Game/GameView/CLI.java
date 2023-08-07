@@ -1,7 +1,5 @@
 package Game.GameView;
 
-import Game.GameView.Units.Players.Player;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -26,9 +24,8 @@ public class CLI implements MessageCallback   {
         System.out.println(s);
         return s;
     }
-    public String combatResult(String message) {
+    public void combatResult(String message) {
         System.out.println(message);
-        return message;
     }
     public String gameTickDesc(String message) {
         System.out.println(message);

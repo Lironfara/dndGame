@@ -96,7 +96,6 @@ public class hunter extends Player {
     public void visit(Tile tile) { }
     @Override
     public void accept(Wall wall) {}
-
     public void accept(Units unit, Position newPosition) {
         unit.accept(this);
         }

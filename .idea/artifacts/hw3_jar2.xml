@@ -1,0 +1,46 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="hw3:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/hw3_jar2</output-path>
+    <properties id="ant-preprocessing">
+      <options enabled="true" />
+    </properties>
+    <root id="archive" name="hw3.jar">
+      <element id="module-output" name="hw3" />
+      <element id="module-source" name="hw3" />
+      <element id="directory" name="srs">
+        <element id="file-copy" path="$PROJECT_DIR$/src/UserInterface.java" />
+        <element id="directory" name="Game">
+          <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/CLI.java" />
+          <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/GameController.java" />
+          <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/InputReader.java" />
+          <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/MessageCallback.java" />
+          <element id="directory" name="BoardPackaeg">
+            <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/BoardPackaeg/Board.java" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/BoardPackaeg/Empty.java" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/BoardPackaeg/Position.java" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/BoardPackaeg/Range.java" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/BoardPackaeg/Tile.java" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/BoardPackaeg/TileFactory.java" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/BoardPackaeg/Wall.java" />
+          </element>
+          <element id="directory" name="Units">
+            <element id="directory" name="Enemys">
+              <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/Units/Enemys/Enemy.java" />
+              <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/Units/Enemys/Monster.java" />
+              <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/Units/Enemys/Trap.java" />
+            </element>
+            <element id="directory" name="Players">
+              <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/Units/Players/hunter.java" />
+              <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/Units/Players/Mage.java" />
+              <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/Units/Players/Player.java" />
+              <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/Units/Players/Rogue.java" />
+              <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/Units/Players/Warrior.java" />
+            </element>
+            <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/Units/Units.java" />
+            <element id="file-copy" path="$PROJECT_DIR$/src/Game/GameView/Units/Health.java" />
+          </element>
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

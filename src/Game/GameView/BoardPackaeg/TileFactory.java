@@ -16,12 +16,10 @@ public class TileFactory {
     private List<Supplier<Player>> playersList;
     private Map<Character, Supplier<Enemy>> enemiesMap;
     private Player selected;
-
     public TileFactory(){
         playersList = initPlayers();
         enemiesMap = initEnemies();
     }
-
     private Map<Character, Supplier<Enemy>> initEnemies() {
         List<Supplier<Enemy>> enemies = Arrays.asList(
                 () -> new Monster('s', "Lannister Solider", 80, 8, 3,25, 3),
@@ -43,7 +41,6 @@ public class TileFactory {
 
         return enemies.stream().collect(Collectors.toMap(s -> s.get().getTile(), Function.identity()));
     }
-
     private List<Supplier<Player>> initPlayers() {
         return Arrays.asList(
                 () -> new Warrior("Jon Snow", 300, 30, 4, 3),
@@ -55,13 +52,9 @@ public class TileFactory {
                 () -> new hunter("Ygritte", 220, 30, 2, 6)
         );
     }
-
     public List<Player> listPlayers(){
         return playersList.stream().map(Supplier::get).collect(Collectors.toList());
     }
-
-    // TODO: Add additional callbacks of your choice
-
     public Tile produceTile(char c, Position position, int idx){
         if(c=='#'){
             return produceWall(position);
@@ -75,7 +68,6 @@ public class TileFactory {
             return produceEnemy(c,position);
 
     }
-
     public Tile onDeath(Position position){
         return new Empty(position, 'X');
     }
@@ -84,21 +76,17 @@ public class TileFactory {
         output.initialize(position);
         return output;
     }
-
     public Player producePlayer(int idx, Position position){
         Player output = playersList.get(idx).get();
         output.initialize(position);
         return output;
     }
-
     public Empty produceEmpty(Position position){
         return new Empty(position);
     }
-
     public Wall produceWall(Position position){
         return new Wall(position);
     }
-
     public Tile generate(char c, Position position){
         if (enemiesMap.containsKey(c)){
             return produceEnemy(c, position);

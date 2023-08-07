@@ -1,5 +1,5 @@
 package Game.GameView;
-import Game.GameView.Units.Players.Player;
+
 public interface MessageCallback {
      void abilityCast(String s);
      String onDeath(String name);
@@ -11,5 +11,5 @@ public interface MessageCallback {
      void printBoard(String bord);
      String playerMoveSelection();
      void describe(String s);
-    String combatResult(String s);
+    void combatResult(String s);
 }
