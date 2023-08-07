@@ -40,17 +40,19 @@ public class GameController {
         }
         return levels;
     }
-    public Player choosePlayer(List<List<String>> cuurentLevel){
+    public Player choosePlayer(List<List<String>> currentLevel){
         Player player = null;
         cli.gameStartOutPut();
         String dx = cli.readerInput();
-        while (dx.compareTo("1") > 0 && dx.compareTo("7")>0){
+        List<String> valid = new ArrayList<>();
+        valid.add("1"); valid.add("2"); valid.add("3");valid.add("4"); valid.add("5"); valid.add("6"); valid.add("7");
+        while (!valid.contains(dx)){
             cli.gameStartOutPut();
            dx = cli.readerInput();
         }
         TileFactory tileFactory = new TileFactory();
-        for(int height=0; height<cuurentLevel.get(0).size(); height++){
-            String line = cuurentLevel.get(0).get(height);
+        for(int height=0; height<currentLevel.get(0).size(); height++){
+            String line = currentLevel.get(0).get(height);
             for (int width=0; width<line.length(); width++){
                Position position = new Position(new int[]{height, width});
 
@@ -63,24 +65,25 @@ public class GameController {
         }
         return player;
     }
-    public Player startGame(List<List<String>> levels) {
+    public Player startGame() {
         int currentLevel = 1;
-        List<List<String>> currentLevelMap = Collections.singletonList(levels.get(currentLevel - 1));
-        Player player = choosePlayer(currentLevelMap);
-        Board board = new Board(currentLevelMap, player);
+        Levels levels = new Levels();
+        List<List<String>> currentLevelMap = levels.getLevels();
+        Player player = choosePlayer((currentLevelMap));
+        Board board = new Board((currentLevelMap), player);
         cli.printBoard(board.printBoard());
         while (!player.isDead() && currentLevel<=4){
-            String movment = cli.playerMoveSelection();
-            if (movment.equals("e")){
+            String movement = cli.playerMoveSelection();
+            if (movement.equals("e")){
                 board.abilityCast(player);
                 cli.printBoard(board.gameTick(player, "q"));
             }
             else{
-                cli.printBoard(board.gameTick(player,movment));
+                cli.printBoard(board.gameTick(player,movement));
                 if (board.getNumberOfEnemies()==0){
                     currentLevel++;
-                    currentLevelMap =  Collections.singletonList(levels.get(currentLevel - 1));
-                    board = new Board(currentLevelMap, player);
+                    //currentLevelMap = (levels.get(currentLevel));
+                    board = new Board((currentLevelMap), player);
                     cli.printBoard(board.printBoard());
                 }
             }
